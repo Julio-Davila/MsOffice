@@ -1,1 +1,247 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#107C41" />
+  <title>SISE | Excel: Organización de Datos y Análisis Básico</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
 
+  <div id="authOverlay" class="auth-overlay" aria-modal="true" role="dialog">
+    <div class="auth-card">
+      <div class="auth-visual">
+        <img class="auth-bg" src="assets/excel-01.png" alt="Estudiantes trabajando con Microsoft Excel" />
+        <div class="auth-gradient"></div>
+        <div class="auth-copy">
+          <span class="eyebrow">SEMANA 6 · TALLER DE INFORMÁTICA PARA LA EMPLEABILIDAD</span>
+          <h1>Organiza, analiza y decide con <strong>Microsoft Excel</strong></h1>
+          <p>Filtros, filtros avanzados, formato condicional y tablas dinámicas en una experiencia interactiva.</p>
+          <div class="auth-badges">
+            <span>✓ Aprendizaje guiado</span><span>✓ Juegos</span><span>✓ Diploma PDF</span>
+          </div>
+        </div>
+      </div>
+      <div class="auth-form-wrap">
+        <img src="assets/logo-sise.png" alt="SISE" class="sise-logo" />
+        <div class="excel-mark" aria-label="Microsoft Excel"><span>X</span></div>
+        <h2>Bienvenido(a)</h2>
+        <p class="muted">Ingresa tus datos. Se usarán exactamente como los escribas en tu diploma.</p>
+        <form id="authForm" autocomplete="on">
+          <label>Nombre completo
+            <input id="studentName" type="text" placeholder="Ej. Juan Pérez García" autocomplete="name" required minlength="4" />
+          </label>
+          <label>Correo electrónico
+            <input id="studentEmail" type="email" placeholder="nombre@correo.com" autocomplete="email" required />
+          </label>
+          <label>Clave de acceso
+            <div class="password-wrap">
+              <input id="accessKey" type="password" placeholder="••••••••" required />
+              <button type="button" id="togglePassword" class="icon-btn" aria-label="Mostrar u ocultar clave">👁</button>
+            </div>
+          </label>
+          <button class="btn btn-primary btn-block" type="submit">Ingresar a la plataforma <span>→</span></button>
+          <div id="authError" class="auth-error" role="alert"></div>
+        </form>
+        <div class="privacy-note"><span>🔒</span> La clave se valida mediante huella SHA-256 en el navegador; no se guarda en texto visible.</div>
+      </div>
+    </div>
+  </div>
+
+  <button id="mobileMenuBtn" class="mobile-menu-btn" aria-label="Abrir menú">☰</button>
+  <div id="mobileScrim" class="mobile-scrim"></div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="brand-wrap">
+      <img src="assets/logo-sise.png" alt="SISE" class="brand-logo" />
+      <div class="excel-chip"><span class="excel-chip-icon">X</span><span>Excel 365</span></div>
+    </div>
+
+    <nav class="nav-list" aria-label="Navegación principal">
+      <button class="nav-item active" data-target="inicio"><span class="nav-icon green">⌂</span><span>Inicio</span></button>
+      <button class="nav-item" data-target="teoria"><span class="nav-icon teal">▣</span><span>Teoría</span></button>
+      <button class="nav-item" data-target="tips"><span class="nav-icon yellow">✦</span><span>Tips y atajos</span></button>
+      <button class="nav-item" data-target="videos"><span class="nav-icon blue">▶</span><span>Videos</span></button>
+      <button class="nav-item" data-target="juegos"><span class="nav-icon purple">✚</span><span>Juegos</span></button>
+      <button class="nav-item" data-target="quiz"><span class="nav-icon cyan">✓</span><span>Cuestionario</span></button>
+      <button class="nav-item" data-target="diploma"><span class="nav-icon gold">★</span><span>Diploma</span></button>
+    </nav>
+
+    <div class="quick-tips">
+      <div class="quick-title">Atajos rápidos</div>
+      <div><kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>L</kbd><span>Filtros</span></div>
+      <div><kbd>Ctrl</kbd> + <kbd>T</kbd><span>Crear tabla</span></div>
+      <div><kbd>Alt</kbd> + <kbd>N</kbd> + <kbd>V</kbd><span>Tabla dinámica</span></div>
+    </div>
+
+    <div class="progress-panel">
+      <div class="progress-top"><span>Tu progreso</span><strong id="sidebarPct">0%</strong></div>
+      <div class="progress-track"><div id="sidebarBar" class="progress-fill"></div></div>
+      <small id="sidebarStatus">Comienza con la teoría</small>
+    </div>
+
+    <button id="logoutBtn" class="logout-btn">Cerrar sesión</button>
+  </aside>
+
+  <main class="app-shell">
+    <header class="topbar">
+      <div>
+        <div class="topbar-kicker">MICROSOFT EXCEL · ORGANIZACIÓN DE DATOS</div>
+        <div class="topbar-title">Semana 6 · Sesión 1</div>
+      </div>
+      <div class="topbar-right">
+        <div class="mini-progress"><span id="topPct">0%</span><small>completado</small></div>
+        <div class="student-chip"><div id="avatar" class="avatar">E</div><div><span>Hola,</span><strong id="studentChipName">Estudiante</strong></div></div>
+      </div>
+    </header>
+
+    <section id="inicio" class="page-section active-section">
+      <div class="hero-card">
+        <div class="hero-media">
+          <img id="heroImage" src="assets/excel-03.png" alt="Estudiantes aprendiendo Excel" />
+          <div class="hero-overlay"></div>
+        </div>
+        <div class="hero-content">
+          <div class="hero-badge"><span class="excel-mini">X</span> Microsoft Excel 365</div>
+          <h1>Convierte datos densos en <span>información útil</span> para decidir</h1>
+          <p>Aprende a organizar, filtrar, resaltar y resumir datos usando herramientas clave de Excel, tal como plantea la sesión de aprendizaje.</p>
+          <div class="hero-actions">
+            <button class="btn btn-primary" data-go="teoria">Comenzar aprendizaje →</button>
+            <button class="btn btn-light" data-go="juegos">Ir a los retos</button>
+          </div>
+          <div id="heroDots" class="hero-dots" aria-label="Carrusel de imágenes"></div>
+        </div>
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat-card"><strong>4</strong><span>Temas principales</span></div>
+        <div class="stat-card"><strong>3</strong><span>Juegos interactivos</span></div>
+        <div class="stat-card"><strong>10</strong><span>Preguntas evaluativas</span></div>
+        <div class="stat-card"><strong>1</strong><span>Diploma final</span></div>
+      </div>
+
+      <div class="dashboard-grid">
+        <div class="module-card wide">
+          <div class="section-heading"><div><span class="kicker">RUTA DE APRENDIZAJE</span><h2>Domina las herramientas esenciales</h2></div><span class="tag">Ciclo II</span></div>
+          <div class="topic-mini-grid">
+            <button data-go="teoria" data-topic="filtros" class="topic-mini"><span class="topic-symbol filter">⌕</span><div><strong>Filtros</strong><small>Texto, números y fechas</small></div><span>→</span></button>
+            <button data-go="teoria" data-topic="avanzados" class="topic-mini"><span class="topic-symbol advanced">⚙</span><div><strong>Filtros avanzados</strong><small>Criterios combinados</small></div><span>→</span></button>
+            <button data-go="teoria" data-topic="condicional" class="topic-mini"><span class="topic-symbol conditional">▦</span><div><strong>Formato condicional</strong><small>Alertas y tendencias</small></div><span>→</span></button>
+            <button data-go="teoria" data-topic="dinamicas" class="topic-mini"><span class="topic-symbol pivot">▥</span><div><strong>Tablas dinámicas</strong><small>Resumen e interpretación</small></div><span>→</span></button>
+          </div>
+        </div>
+        <div class="module-card">
+          <span class="kicker">PROPÓSITO DE LA SESIÓN</span>
+          <h2>Organizar, filtrar, resumir e interpretar</h2>
+          <p>La meta es obtener información relevante y sustentar decisiones con evidencia, verificando críticamente cualquier apoyo de IA.</p>
+          <div class="quote-box">“No basta con tener datos: hay que convertirlos en una lectura clara y verificable.”</div>
+        </div>
+      </div>
+
+      <div class="gallery-strip" id="galleryStrip"></div>
+    </section>
+
+    <section id="teoria" class="page-section">
+      <div class="page-head">
+        <div><span class="kicker">TEORÍA APLICADA</span><h1>Organización de datos y análisis básico</h1><p>Lee cada tema, revisa el ejemplo y marca la lección como completada.</p></div>
+        <div class="page-illustration"><img src="assets/excel-02.png" alt="Estudiantes revisando datos en Excel" /></div>
+      </div>
+      <div id="theoryTabs" class="tabs">
+        <button class="tab active" data-theory="filtros">Filtros</button>
+        <button class="tab" data-theory="avanzados">Filtros avanzados</button>
+        <button class="tab" data-theory="condicional">Formato condicional</button>
+        <button class="tab" data-theory="dinamicas">Tablas dinámicas</button>
+      </div>
+      <div id="theoryContent"></div>
+    </section>
+
+    <section id="tips" class="page-section">
+      <div class="page-head compact">
+        <div><span class="kicker">PRODUCTIVIDAD</span><h1>Tips y combinaciones de teclado</h1><p>Atajos que aceleran tu trabajo sin perder precisión.</p></div>
+        <div class="page-illustration"><img src="assets/excel-05.png" alt="Trabajo colaborativo con Excel" /></div>
+      </div>
+      <div class="tip-grid" id="tipGrid"></div>
+      <div class="ai-card">
+        <div class="ai-icon">AI</div>
+        <div><span class="kicker">IA COMO APOYO BÁSICO</span><h2>Consulta, contrasta y verifica</h2><p>Puedes usar IA para proponer preguntas o sintetizar hallazgos, pero la respuesta debe contrastarse con los datos reales de Excel. Si la IA contradice la tabla, prevalece la evidencia de la hoja de cálculo.</p></div>
+        <div class="ai-checklist"><span>✓ Formula una pregunta concreta</span><span>✓ Verifica cifras y filtros</span><span>✓ Contrasta la conclusión</span></div>
+      </div>
+      <div class="complete-wrap"><button id="completeTipsBtn" class="btn btn-primary">Marcar Tips + IA como completados ✓</button></div>
+    </section>
+
+    <section id="videos" class="page-section">
+      <div class="page-head compact">
+        <div><span class="kicker">REFUERZO AUDIOVISUAL</span><h1>Videos de aprendizaje</h1><p>Reproduce los tutoriales dentro de la plataforma y refuerza cada herramienta.</p></div>
+        <div class="page-illustration"><img src="assets/excel-07.png" alt="Laboratorio con Excel" /></div>
+      </div>
+      <div class="video-grid">
+        <article class="video-card"><div class="video-frame"><iframe src="https://www.youtube-nocookie.com/embed/ElWveAQUyps" title="Ordenar y filtrar datos en Excel" loading="lazy" allowfullscreen></iframe></div><h3>1. Ordenar y filtrar datos en Excel</h3><p>Fundamentos para localizar información rápidamente.</p></article>
+        <article class="video-card"><div class="video-frame"><iframe src="https://www.youtube-nocookie.com/embed/uoj1nI-VePU" title="Tablas dinámicas en Excel" loading="lazy" allowfullscreen></iframe></div><h3>2. Tablas dinámicas</h3><p>Resume y analiza grandes conjuntos de datos.</p></article>
+        <article class="video-card"><div class="video-thumb"><img src="assets/excel-04.png" alt="Excel en laboratorio" /><a href="https://www.youtube.com/results?search_query=filtro+avanzado+excel+espa%C3%B1ol" target="_blank" rel="noopener">Buscar tutorial ▶</a></div><h3>3. Filtro avanzado</h3><p>Practica criterios múltiples y rangos de condiciones.</p></article>
+        <article class="video-card"><div class="video-thumb"><img src="assets/excel-08.png" alt="Excel en laboratorio" /><a href="https://www.youtube.com/results?search_query=formato+condicional+excel+espa%C3%B1ol" target="_blank" rel="noopener">Buscar tutorial ▶</a></div><h3>4. Formato condicional</h3><p>Destaca tendencias, alertas y resultados relevantes.</p></article>
+      </div>
+      <div class="callout"><strong>Consejo:</strong> mira un video con tu archivo de Excel abierto y replica cada paso. Aprenderás más haciendo que solo observando.</div>
+    </section>
+
+    <section id="juegos" class="page-section">
+      <div class="page-head compact">
+        <div><span class="kicker">GAMIFICACIÓN</span><h1>Juegos educativos</h1><p>Practica vocabulario, lógica y reconocimiento de herramientas.</p></div>
+        <div class="page-illustration"><img src="assets/excel-06.png" alt="Estudiantes practicando Excel" /></div>
+      </div>
+      <div class="tabs games-tabs">
+        <button class="tab active" data-game="crossword">Crucigrama</button>
+        <button class="tab" data-game="memory">Juego de memoria</button>
+        <button class="tab" data-game="wordsearch">Sopa de letras · 10 palabras</button>
+      </div>
+      <div id="gameArea"></div>
+    </section>
+
+    <section id="quiz" class="page-section">
+      <div class="page-head compact">
+        <div><span class="kicker">EVALUACIÓN</span><h1>Cuestionario de 10 preguntas</h1><p>Responde todas. Recibirás feedback inmediato en cada pregunta.</p></div>
+        <div class="page-illustration"><img src="assets/excel-09.png" alt="Estudiantes en laboratorio moderno" /></div>
+      </div>
+      <div class="quiz-shell">
+        <div class="quiz-progress"><div><span id="quizCount">Pregunta 1 de 10</span><strong id="quizScore">0 correctas</strong></div><div class="progress-track"><div id="quizBar" class="progress-fill"></div></div></div>
+        <div id="quizCard" class="quiz-card"></div>
+      </div>
+    </section>
+
+    <section id="diploma" class="page-section">
+      <div class="page-head compact">
+        <div><span class="kicker">RECONOCIMIENTO</span><h1>Diploma de finalización</h1><p>Completa teoría, tips, juegos y cuestionario para desbloquearlo.</p></div>
+        <div class="page-illustration"><img src="assets/excel-10.png" alt="Trabajo colaborativo con Excel" /></div>
+      </div>
+      <div id="diplomaLocked" class="locked-card">
+        <div class="lock-icon">🔒</div>
+        <h2>Tu diploma todavía está bloqueado</h2>
+        <p id="lockedText">Completa todas las actividades obligatorias.</p>
+        <div id="requirementsList" class="requirements-list"></div>
+      </div>
+      <div id="diplomaReady" class="diploma-ready hidden">
+        <div id="diplomaPreview" class="diploma-preview">
+          <div class="diploma-border">
+            <img src="assets/logo-sise.png" alt="SISE" class="diploma-logo" />
+            <div class="diploma-excel">X</div>
+            <span class="diploma-kicker">DIPLOMA DE FINALIZACIÓN</span>
+            <h2>Microsoft Excel: Organización de Datos y Análisis Básico</h2>
+            <p>Se otorga el presente reconocimiento a</p>
+            <h1 id="diplomaName">Nombre del estudiante</h1>
+            <p id="diplomaEmail">correo@ejemplo.com</p>
+            <p>por completar satisfactoriamente las actividades de filtros, filtros avanzados, formato condicional, tablas dinámicas y análisis básico.</p>
+            <div class="diploma-meta"><span>Fecha: <strong id="diplomaDate"></strong></span><span>Cuestionario: <strong id="diplomaScore"></strong></span></div>
+            <div class="diploma-footer"><div><span class="signature-line"></span><small>DÁVILA SALVADOR, Julio · Docente</small></div><div class="seal">SISE<br><small>2026</small></div><div><span class="signature-line"></span><small>Taller de Informática para la Empleabilidad</small></div></div>
+          </div>
+        </div>
+        <div class="diploma-actions"><button id="downloadDiplomaBtn" class="btn btn-primary">Descargar diploma en PDF ↓</button><button id="printDiplomaBtn" class="btn btn-light">Imprimir diploma</button></div>
+      </div>
+    </section>
+
+    <footer class="footer">SISE · Taller de Informática para la Empleabilidad · Semana 6 · Microsoft Excel 365</footer>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
