@@ -1,1 +1,412 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#107c41" />
+  <title>Excel 365 Online | Sesión 3 - SISE</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div id="welcome" class="welcome-overlay" aria-modal="true" role="dialog">
+    <div class="welcome-shell welcome-v2">
+      <section class="welcome-visual welcome-showcase" aria-label="Experiencia educativa Microsoft Excel 365">
+        <div id="welcomeSlides" class="welcome-slides" aria-hidden="true">
+          <img class="welcome-slide active" src="assets/hero.webp" alt="Estudiante trabajando con Excel" />
+          <img class="welcome-slide" src="assets/equipo.webp" alt="Equipo joven colaborando con Excel" />
+          <img class="welcome-slide" src="assets/formatos.webp" alt="Estudiante aplicando formatos" />
+          <img class="welcome-slide" src="assets/funciones.webp" alt="Funciones esenciales en Excel" />
+          <img class="welcome-slide" src="assets/aula.webp" alt="Aula usando Excel 365" />
+          <img class="welcome-slide" src="assets/docente.webp" alt="Docente enseñando Excel" />
+          <img class="welcome-slide" src="assets/celebracion.webp" alt="Estudiantes celebrando sus logros" />
+          <img class="welcome-slide" src="assets/planificacion.webp" alt="Planificación de eventos en Excel" />
+        </div>
+        <div class="welcome-photo-overlay"></div>
+        <div class="welcome-brand-corner">
+          <img src="assets/sise-logo.png" alt="Logo SISE" />
+          <div><b>CPEX</b><span>Carreras para personas con experiencia</span></div>
+        </div>
+        <div class="welcome-showcase-copy">
+          <span class="welcome-badge">MICROSOFT EXCEL 365 ONLINE · SESIÓN 3</span>
+          <h1>Aprende Excel<br><em>haciendo.</em></h1>
+          <p>Organiza información, automatiza cálculos y convierte un presupuesto en decisiones claras.</p>
+          <div class="welcome-metrics">
+            <div><b>9</b><span>funciones clave</span></div>
+            <div><b>3</b><span>juegos interactivos</span></div>
+            <div><b>10</b><span>preguntas</span></div>
+          </div>
+        </div>
+        <div id="welcomeDots" class="welcome-dots" aria-label="Galería de bienvenida"></div>
+      </section>
 
+      <section class="welcome-copy welcome-login-panel">
+        <div class="access-topline">
+          <div class="access-logos">
+            <img src="assets/sise-logo.png" alt="SISE" />
+            <span class="brand-separator"></span>
+            <div class="excel-mini-mark">X</div>
+          </div>
+          <span class="access-secure">● Acceso seguro</span>
+        </div>
+
+        <div class="access-heading">
+          <span class="welcome-kicker">Taller de Informática para la Empleabilidad</span>
+          <h2>Bienvenido a tu experiencia de <span>Excel 365</span></h2>
+          <p>Registra tus datos para guardar tu avance y personalizar el diploma de finalización.</p>
+        </div>
+
+        <div class="access-route">
+          <div><i>1</i><span><b>Ingresa</b><small>con tus datos</small></span></div>
+          <div><i>2</i><span><b>Aprende</b><small>teoría + práctica</small></span></div>
+          <div><i>3</i><span><b>Completa</b><small>juegos + quiz</small></span></div>
+          <div><i>4</i><span><b>Certifica</b><small>descarga tu diploma</small></span></div>
+        </div>
+
+        <form id="loginForm" class="login-card login-card-v2" novalidate>
+          <div class="form-heading">
+            <div>
+              <small>ACCESO DEL ESTUDIANTE</small>
+              <h3>Ingresa a la sesión</h3>
+            </div>
+            <div class="secure-badge">🔒 SHA-256</div>
+          </div>
+
+          <label>Nombre completo
+            <div class="input-shell"><span>👤</span><input id="fullName" name="fullName" autocomplete="name" placeholder="Ej.: Andrea Vega Salazar" required /></div>
+          </label>
+          <label>Correo electrónico
+            <div class="input-shell"><span>✉</span><input id="email" name="email" type="email" autocomplete="email" placeholder="nombre@correo.com" required /></div>
+          </label>
+          <label>Clave de acceso
+            <div class="password-wrap input-shell">
+              <span>🔑</span><input id="password" name="password" type="password" autocomplete="current-password" placeholder="Ingresa la clave de la sesión" required />
+              <button id="togglePassword" class="icon-button" type="button" aria-label="Mostrar u ocultar clave">◉</button>
+            </div>
+          </label>
+          <div id="loginError" class="form-error" role="alert"></div>
+          <button class="primary large access-button" type="submit">Ingresar a la experiencia <span>→</span></button>
+          <div class="privacy-note"><span>🛡</span><p>Tus datos se guardan únicamente en este navegador para conservar el progreso y generar tu diploma.</p></div>
+        </form>
+
+        <div class="access-footer"><span>SISE · CPEX</span><span>Sesión 3 · 15/09/2026</span></div>
+      </section>
+    </div>
+  </div>
+
+  <div id="app" class="app-shell is-locked" aria-hidden="true">
+    <aside id="sidebar" class="sidebar">
+      <div class="sidebar-head">
+        <div class="brand-compact">
+          <img src="assets/sise-logo.png" alt="SISE" />
+          <div><b>EXCEL 365</b><small>Sesión 3 · CPEX</small></div>
+        </div>
+        <button id="sidebarClose" class="sidebar-close" aria-label="Cerrar menú">×</button>
+      </div>
+
+      <nav class="nav-list" aria-label="Navegación principal">
+        <button class="nav-item active" data-section="inicio"><span class="nav-icon green">⌂</span><span>Inicio</span><em class="nav-status">•</em></button>
+        <button class="nav-item" data-section="teoria"><span class="nav-icon blue">▤</span><span>Teoría</span><em id="stTheory" class="nav-status">○</em></button>
+        <button class="nav-item" data-section="videos"><span class="nav-icon red">▶</span><span>Videos e infografías</span><em class="nav-status">•</em></button>
+        <button class="nav-item" data-section="juegos"><span class="nav-icon amber">◆</span><span>Juegos educativos</span><em id="stGames" class="nav-status">○</em></button>
+        <button class="nav-item" data-section="quiz"><span class="nav-icon violet">✓</span><span>Cuestionario</span><em id="stQuiz" class="nav-status">○</em></button>
+        <button class="nav-item" data-section="diploma"><span class="nav-icon cyan">★</span><span>Diploma</span><em id="stDiploma" class="nav-status">🔒</em></button>
+      </nav>
+
+      <div class="sidebar-tipbox">
+        <div class="tipbox-title"><span>💡</span><b>Tips rápidos</b></div>
+        <div id="tipText" class="tip-text">Ctrl + S: guarda tu trabajo con frecuencia.</div>
+        <div class="tip-dots" id="tipDots"></div>
+        <button id="nextTip" class="mini-button">Siguiente tip →</button>
+        <button id="markTips" class="tip-complete">Marcar tips como revisados</button>
+      </div>
+
+      <div class="sidebar-user">
+        <div id="userInitials" class="avatar">EV</div>
+        <div class="user-meta"><b id="sidebarName">Estudiante</b><small id="sidebarEmail">correo@ejemplo.com</small></div>
+        <button id="logoutBtn" class="ghost-icon" title="Salir">↪</button>
+      </div>
+    </aside>
+
+    <div id="mobileScrim" class="mobile-scrim"></div>
+
+    <main class="main-area">
+      <header class="topbar">
+        <button id="menuBtn" class="hamburger" aria-label="Abrir menú">☰</button>
+        <div class="top-title">
+          <small>MICROSOFT EXCEL 365 ONLINE</small>
+          <h2 id="pageTitle">Panel de aprendizaje</h2>
+        </div>
+        <div class="top-progress">
+          <div class="progress-copy"><span>Progreso total</span><b id="progressLabel">0%</b></div>
+          <div class="progress-track"><i id="progressBar" style="width:0%"></i></div>
+        </div>
+      </header>
+
+      <div class="content-wrap">
+        <section id="inicio" class="section-panel active">
+          <div class="hero-banner">
+            <div class="hero-content">
+              <span class="eyebrow">SESIÓN DE APRENDIZAJE · 15/09/2026</span>
+              <h1>Planifica un evento con Excel y toma decisiones con datos</h1>
+              <p>Tu reto es construir una hoja ordenada, legible y funcional que registre actividades, responsables, fechas, recursos y costos, y que use fórmulas para interpretar el presupuesto.</p>
+              <div class="hero-actions">
+                <button class="primary" data-go="teoria">Comenzar teoría →</button>
+                <a class="secondary" href="docs/sesion_semana_03.pdf" target="_blank" rel="noopener">Ver sesión original</a>
+              </div>
+            </div>
+            <img src="assets/equipo.webp" alt="Equipo de estudiantes colaborando con hojas de cálculo" />
+          </div>
+
+          <div class="welcome-line"><span>“Una hoja bien organizada no solo calcula: ayuda a decidir.”</span></div>
+
+          <div class="stats-grid">
+            <article><div class="stat-icon green">⌗</div><b>9</b><span>Funciones y recursos clave</span></article>
+            <article><div class="stat-icon blue">◫</div><b>3</b><span>Juegos educativos</span></article>
+            <article><div class="stat-icon amber">?</div><b>10</b><span>Preguntas de evaluación</span></article>
+            <article><div class="stat-icon violet">★</div><b>1</b><span>Diploma final en PDF</span></article>
+          </div>
+
+          <div class="two-col">
+            <article class="card">
+              <div class="card-head"><div><small>PROPÓSITO DE LA SESIÓN</small><h3>¿Qué lograrás?</h3></div><span class="badge green">Competencia</span></div>
+              <ul class="check-list">
+                <li>Registrar información completa y ordenada en una tabla de planificación.</li>
+                <li>Aplicar formatos de texto, fecha, moneda, bordes y alineación.</li>
+                <li>Automatizar cálculos con referencias de celdas y operadores matemáticos.</li>
+                <li>Resumir y consultar el presupuesto con funciones esenciales y condicionales.</li>
+                <li>Interpretar resultados para sustentar decisiones básicas.</li>
+              </ul>
+            </article>
+            <article class="card image-card">
+              <img src="assets/planificacion.webp" alt="Ejemplo de tabla de planificación de evento en Excel" />
+              <div class="image-caption"><b>Evidencia principal</b><span>Hoja de Excel 365 para planificar un evento y su presupuesto.</span></div>
+            </article>
+          </div>
+        </section>
+
+        <section id="teoria" class="section-panel">
+          <div class="section-heading">
+            <div><span class="eyebrow">TEORÍA + PRÁCTICA</span><h1>Domina los conceptos de la sesión</h1><p>Abre los 5 temas para registrar tu revisión. Después podrás marcar la teoría como completada.</p></div>
+            <div class="topic-counter"><b id="topicVisited">0/5</b><span>temas revisados</span></div>
+          </div>
+
+          <div class="theory-layout">
+            <div class="accordion-stack">
+              <details class="topic-card" data-topic="organizacion">
+                <summary><span class="topic-num">01</span><div><b>Organización y registro de información</b><small>Actividad, responsable, fecha, recurso y costo</small></div><span class="chev">⌄</span></summary>
+                <div class="topic-body">
+                  <p>Una hoja de planificación debe estructurar cada dato en una columna definida. Así se facilita la lectura, los cálculos posteriores y la validación de la información.</p>
+                  <div class="excel-table-mini">
+                    <div class="th">ACTIVIDAD</div><div class="th">RESPONSABLE</div><div class="th">FECHA</div><div class="th">RECURSO</div><div class="th">COSTO</div>
+                    <div>Catering</div><div>Juan Pérez</div><div>01/06/2026</div><div>Proveedor</div><div>S/ 4,800</div>
+                    <div>Transporte</div><div>Sofía Lima</div><div>01/06/2026</div><div>Empresa</div><div>S/ 1,200</div>
+                  </div>
+                  <div class="tip-callout"><b>Tip:</b> evita mezclar dos tipos de información en una misma columna; una columna debe representar un solo dato.</div>
+                </div>
+              </details>
+
+              <details class="topic-card" data-topic="formato">
+                <summary><span class="topic-num">02</span><div><b>Tablas y formato de datos</b><small>Texto, fechas, moneda, bordes y alineación</small></div><span class="chev">⌄</span></summary>
+                <div class="topic-body split-body">
+                  <div>
+                    <p>El formato no cambia el valor del dato; cambia su presentación. En una planificación conviene usar fechas legibles, costos con formato moneda, encabezados destacados y bordes consistentes.</p>
+                    <ul class="bullet-list"><li><b>Texto:</b> nombres y descripciones.</li><li><b>Fecha:</b> permite ordenar y comparar cronogramas.</li><li><b>Moneda:</b> hace evidente que el valor representa un costo.</li><li><b>Bordes y alineación:</b> mejoran legibilidad y estructura visual.</li></ul>
+                  </div>
+                  <img src="assets/formatos.webp" alt="Estudiante aplicando formatos en una hoja de Excel" />
+                </div>
+              </details>
+
+              <details class="topic-card" data-topic="operadores">
+                <summary><span class="topic-num">03</span><div><b>Operadores y referencias de celdas</b><small>Automatización básica de cálculos</small></div><span class="chev">⌄</span></summary>
+                <div class="topic-body">
+                  <p>Excel calcula usando referencias como <code>C2</code>, <code>E8</code> o rangos como <code>E3:E8</code>. Una fórmula siempre inicia con el signo <code>=</code>.</p>
+                  <div class="formula-grid">
+                    <div><code>=E3+E4</code><span>Suma dos costos</span></div>
+                    <div><code>=E3-E4</code><span>Calcula una diferencia</span></div>
+                    <div><code>=E3*1.18</code><span>Multiplica por un factor</span></div>
+                    <div><code>=E3/2</code><span>Divide un valor</span></div>
+                  </div>
+                </div>
+              </details>
+
+              <details class="topic-card" data-topic="esenciales">
+                <summary><span class="topic-num">04</span><div><b>Funciones esenciales</b><small>SUMA, PROMEDIO, MAX, MIN, CONTAR y CONTARA</small></div><span class="chev">⌄</span></summary>
+                <div class="topic-body split-body">
+                  <div class="function-cards">
+                    <div><b>SUMA</b><code>=SUMA(E3:E8)</code><span>Totaliza los costos.</span></div>
+                    <div><b>PROMEDIO</b><code>=PROMEDIO(E3:E8)</code><span>Obtiene el costo medio.</span></div>
+                    <div><b>MAX / MIN</b><code>=MAX(E3:E8)</code><span>Identifica mayor y menor gasto.</span></div>
+                    <div><b>CONTAR / CONTARA</b><code>=CONTAR(E3:E8)</code><span>Cuenta números o celdas no vacías.</span></div>
+                  </div>
+                  <img src="assets/funciones.webp" alt="Ejemplo de funciones MAX, MIN y CONTAR en Excel" />
+                </div>
+              </details>
+
+              <details class="topic-card" data-topic="condicionales">
+                <summary><span class="topic-num">05</span><div><b>Funciones condicionales y presupuesto</b><small>CONTAR.SI, SUMAR.SI y SUMAR.SI.CONJUNTO</small></div><span class="chev">⌄</span></summary>
+                <div class="topic-body">
+                  <p>Las funciones condicionales responden preguntas específicas del presupuesto a partir de uno o varios criterios.</p>
+                  <div class="formula-examples">
+                    <div><span class="fx">fx</span><div><b>CONTAR.SI</b><code>=CONTAR.SI(B2:B15;"Marketing")</code><small>Cuenta cuántos registros cumplen un criterio.</small></div></div>
+                    <div><span class="fx">fx</span><div><b>SUMAR.SI</b><code>=SUMAR.SI(B2:B15;"Catering";E2:E15)</code><small>Suma los costos asociados a un criterio.</small></div></div>
+                    <div><span class="fx">fx</span><div><b>SUMAR.SI.CONJUNTO</b><code>=SUMAR.SI.CONJUNTO(E2:E15;B2:B15;"Marketing";D2:D15;"Pagado")</code><small>Suma solo cuando se cumplen varios criterios.</small></div></div>
+                  </div>
+                  <div class="decision-box"><b>Interpretar es parte del trabajo:</b> el mayor gasto, el menor gasto y el promedio ayudan a comparar alternativas y sustentar decisiones básicas.</div>
+                </div>
+              </details>
+            </div>
+
+            <aside class="learning-path card">
+              <small>RUTA DE LA SESIÓN</small>
+              <h3>De los datos a la decisión</h3>
+              <div class="path-step"><i>1</i><div><b>Registrar</b><span>Datos completos y ordenados</span></div></div>
+              <div class="path-step"><i>2</i><div><b>Formatear</b><span>Fechas, moneda, bordes</span></div></div>
+              <div class="path-step"><i>3</i><div><b>Calcular</b><span>Operadores y funciones</span></div></div>
+              <div class="path-step"><i>4</i><div><b>Verificar</b><span>Revisar fórmulas y errores</span></div></div>
+              <div class="path-step"><i>5</i><div><b>Interpretar</b><span>Comparar y decidir</span></div></div>
+              <button id="completeTheory" class="primary full" disabled>Completar teoría</button>
+              <small id="theoryHint" class="center-note">Abre los 5 temas primero.</small>
+            </aside>
+          </div>
+        </section>
+
+        <section id="videos" class="section-panel">
+          <div class="section-heading">
+            <div><span class="eyebrow">RECURSOS VISUALES</span><h1>Videos e infografías</h1><p>Refuerza la sesión con ejemplos visuales y una síntesis de las funciones trabajadas.</p></div>
+          </div>
+
+          <div class="video-grid">
+            <article class="video-card">
+              <div class="video-frame"><iframe src="https://www.youtube-nocookie.com/embed/GyzVJHHTqVc" title="SUMA, PROMEDIO, CONTAR, MAX, MIN en Excel" loading="lazy" allowfullscreen></iframe></div>
+              <div><span class="badge green">Funciones esenciales</span><h3>SUMA, PROMEDIO, CONTAR, MAX y MIN</h3><p>Repaso práctico de las funciones que resumen la información numérica.</p></div>
+            </article>
+            <article class="video-card">
+              <div class="video-frame"><iframe src="https://www.youtube-nocookie.com/embed/XgY1ZqSNgVE" title="Funciones CONTAR.SI y SUMAR.SI en Excel" loading="lazy" allowfullscreen></iframe></div>
+              <div><span class="badge blue">Funciones con criterios</span><h3>CONTAR.SI, SUMAR.SI y funciones por condición</h3><p>Ejemplos para resolver consultas específicas a partir de uno o varios criterios.</p></div>
+            </article>
+          </div>
+
+          <div class="infographic-grid">
+            <article class="info-poster">
+              <div class="poster-head"><span>01</span><div><small>INFOGRAFÍA</small><h3>Funciones para resumir</h3></div></div>
+              <div class="poster-flow">
+                <div><b>SUMA</b><span>Total</span></div><i>→</i><div><b>PROMEDIO</b><span>Valor medio</span></div><i>→</i><div><b>MAX / MIN</b><span>Extremos</span></div><i>→</i><div><b>CONTAR</b><span>Cantidad</span></div>
+              </div>
+              <div class="poster-note">Úsalas cuando necesites responder “¿cuánto?”, “¿cuál es el promedio?”, “¿cuál es el mayor/menor?” y “¿cuántos valores hay?”.</div>
+            </article>
+            <article class="info-poster dark">
+              <div class="poster-head"><span>02</span><div><small>INFOGRAFÍA</small><h3>Funciones con criterios</h3></div></div>
+              <div class="criteria-pyramid">
+                <div><b>CONTAR.SI</b><small>Cuenta según 1 criterio</small></div>
+                <div><b>SUMAR.SI</b><small>Suma según 1 criterio</small></div>
+                <div><b>SUMAR.SI.CONJUNTO</b><small>Suma según varios criterios</small></div>
+              </div>
+              <div class="poster-note">Primero define la pregunta; luego identifica el rango a evaluar, el criterio y, si corresponde, el rango que se va a sumar.</div>
+            </article>
+          </div>
+
+          <div class="visual-gallery">
+            <img src="assets/aula.webp" alt="Aula usando Excel" />
+            <img src="assets/docente.webp" alt="Docente explicando fórmulas de Excel" />
+            <img src="assets/celebracion.webp" alt="Estudiantes celebrando un logro con Excel" />
+          </div>
+        </section>
+
+        <section id="juegos" class="section-panel">
+          <div class="section-heading">
+            <div><span class="eyebrow">APRENDER JUGANDO</span><h1>Juegos educativos</h1><p>Completa los tres retos. Cada juego valida tus respuestas y actualiza el progreso.</p></div>
+            <div class="motivation-chip">⚡ “Practicar transforma una fórmula en una herramienta.”</div>
+          </div>
+
+          <div class="game-tabs" role="tablist">
+            <button class="game-tab active" data-game="crossword">Crucigrama <span id="tabCross">○</span></button>
+            <button class="game-tab" data-game="logic">Reto mental <span id="tabLogic">○</span></button>
+            <button class="game-tab" data-game="wordsearch">Sopa de letras <span id="tabWord">○</span></button>
+          </div>
+
+          <div id="game-crossword" class="game-panel active">
+            <div class="game-layout">
+              <div class="game-board card"><div id="crosswordGrid" class="crossword-grid" aria-label="Crucigrama interactivo"></div></div>
+              <aside class="game-instructions card">
+                <span class="badge amber">RETO 1</span><h3>Crucigrama de Excel</h3><p>Escribe una letra por casilla. El color verde indica una letra correcta; el rojo te invita a corregirla.</p>
+                <div id="crosswordClues" class="clue-list"></div>
+                <div id="crosswordMsg" class="game-message">Completa todas las casillas.</div>
+                <button id="resetCrossword" class="secondary full">Reiniciar crucigrama</button>
+              </aside>
+            </div>
+          </div>
+
+          <div id="game-logic" class="game-panel">
+            <div class="game-layout">
+              <div class="logic-stage card">
+                <div class="logic-top"><span class="badge blue">RETO 2</span><b id="logicStep">1 / 5</b></div>
+                <div class="logic-progress"><i id="logicBar" style="width:20%"></i></div>
+                <h3 id="logicQuestion">Cargando reto...</h3>
+                <div id="logicData" class="logic-data"></div>
+                <div id="logicOptions" class="logic-options"></div>
+                <div id="logicFeedback" class="game-message"></div>
+                <button id="nextLogic" class="primary" disabled>Siguiente reto →</button>
+              </div>
+              <aside class="game-instructions card">
+                <h3>Presupuesto Express</h3><p>Resuelve 5 situaciones como si fueras responsable del presupuesto de un evento.</p>
+                <ul class="check-list compact"><li>Analiza primero la pregunta.</li><li>Identifica qué función corresponde.</li><li>Comprueba si el resultado es coherente.</li></ul>
+                <div class="score-box"><span>Aciertos</span><b id="logicScore">0</b><small>de 5</small></div>
+              </aside>
+            </div>
+          </div>
+
+          <div id="game-wordsearch" class="game-panel">
+            <div class="game-layout">
+              <div class="game-board card"><div id="wordGrid" class="word-grid" aria-label="Sopa de letras"></div></div>
+              <aside class="game-instructions card">
+                <span class="badge violet">RETO 3</span><h3>Sopa de letras</h3><p>Selecciona la primera y la última letra de cada palabra. Se aceptan líneas horizontales, verticales y diagonales.</p>
+                <div id="wordList" class="word-list"></div>
+                <div id="wordSearchMsg" class="game-message">Encuentra las 10 palabras clave.</div>
+                <button id="resetWordSearch" class="secondary full">Reiniciar sopa</button>
+              </aside>
+            </div>
+          </div>
+        </section>
+
+        <section id="quiz" class="section-panel">
+          <div class="section-heading">
+            <div><span class="eyebrow">COMPRUEBA LO APRENDIDO</span><h1>Cuestionario de 10 preguntas</h1><p>Las preguntas siguen el contenido de la sesión adjunta: organización, formato, cálculos, funciones y presupuesto.</p></div>
+            <div id="quizScoreBadge" class="quiz-score-badge"><b>—</b><span>puntaje</span></div>
+          </div>
+          <div id="quizContainer" class="quiz-list"></div>
+          <div class="quiz-footer card">
+            <div><b>Antes de enviar</b><span id="quizAnswered">0 de 10 preguntas respondidas</span></div>
+            <button id="submitQuiz" class="primary" disabled>Validar cuestionario</button>
+          </div>
+        </section>
+
+        <section id="diploma" class="section-panel">
+          <div class="section-heading">
+            <div><span class="eyebrow">META FINAL</span><h1>Tu diploma de finalización</h1><p>Se habilita cuando completes teoría, tips, los 3 juegos y el cuestionario.</p></div>
+          </div>
+
+          <div id="diplomaLocked" class="diploma-lock card">
+            <div class="lock-orbit"><span>🔒</span></div>
+            <h2>Aún falta completar algunas actividades</h2>
+            <p>Tu diploma se desbloqueará automáticamente al llegar al 100%.</p>
+            <div id="requirements" class="requirements"></div>
+            <button class="secondary" data-go="inicio">Revisar progreso</button>
+          </div>
+
+          <div id="diplomaReady" class="diploma-ready hidden">
+            <div class="celebration-banner"><span>🎉</span><div><b>¡Excelente trabajo!</b><p>Completaste la experiencia. Ya puedes generar tu diploma.</p></div></div>
+            <canvas id="diplomaCanvas" width="1600" height="1131" aria-label="Vista previa del diploma"></canvas>
+            <div class="diploma-actions">
+              <button id="downloadDiploma" class="primary large">Descargar diploma en PDF</button>
+              <button id="printDiploma" class="secondary large">Imprimir / Guardar</button>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script src="app.js"></script>
+</body>
+</html>
