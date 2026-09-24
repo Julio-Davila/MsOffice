@@ -1,1 +1,305 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#107c41" />
+  <meta name="description" content="Plataforma educativa interactiva SISE - Análisis de datos en Microsoft Excel 365" />
+  <title>SISE | Excel 365 - Análisis de Datos</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
 
+  <div id="loginOverlay" class="login-overlay">
+    <div class="login-shell">
+      <div class="login-visual" aria-hidden="true">
+        <img src="assets/excel-analysis.webp" alt="" />
+        <div class="login-visual-overlay">
+          <div class="excel-badge">X</div>
+          <p class="eyebrow">Taller de Informática para la Empleabilidad</p>
+          <h1>Convierte datos en decisiones con Excel 365</h1>
+          <p>Filtros, filtros avanzados, formato condicional, tablas dinámicas e interpretación de información.</p>
+        </div>
+      </div>
+      <form id="loginForm" class="login-card" autocomplete="off">
+        <div class="brand-row">
+          <img class="sise-logo" src="assets/sise-logo.png" alt="Logo SISE" />
+          <div>
+            <span class="small-kicker">AULA DIGITAL</span>
+            <strong>Semana 4 · Sesión 1</strong>
+          </div>
+        </div>
+        <h2>Bienvenido(a)</h2>
+        <p class="muted">Ingresa tus datos. Se usarán para personalizar tu avance y el diploma final.</p>
+        <label>Nombre completo
+          <input id="studentName" type="text" minlength="4" placeholder="Ej. Andrea Quispe Ramos" required />
+        </label>
+        <label>Correo electrónico
+          <input id="studentEmail" type="email" placeholder="nombre@correo.com" required />
+        </label>
+        <label>Clave de acceso
+          <div class="password-wrap">
+            <input id="accessKey" type="password" placeholder="••••••••" required />
+            <button id="togglePassword" type="button" class="icon-button" aria-label="Mostrar u ocultar clave">◉</button>
+          </div>
+        </label>
+        <button class="primary-btn full" type="submit">Ingresar a la experiencia</button>
+        <p id="loginError" class="form-error" aria-live="polite"></p>
+        <div class="security-note">🔒 La clave se valida mediante huella SHA-256; no se almacena en texto plano.</div>
+      </form>
+    </div>
+  </div>
+
+  <div id="app" class="app hidden">
+    <aside id="sidebar" class="sidebar">
+      <div class="sidebar-brand">
+        <img src="assets/sise-logo.png" alt="SISE" />
+        <div>
+          <strong>Excel 365</strong>
+          <span>Data Skills Lab</span>
+        </div>
+        <button id="closeSidebar" class="close-sidebar" aria-label="Cerrar menú">×</button>
+      </div>
+
+      <nav class="nav-list" aria-label="Navegación principal">
+        <button class="nav-item active" data-target="inicio"><span class="nav-icon green">⌂</span><span>Inicio</span></button>
+        <button class="nav-item" data-target="filtros"><span class="nav-icon blue">⇅</span><span>Filtros</span></button>
+        <button class="nav-item" data-target="avanzados"><span class="nav-icon purple">⎇</span><span>Filtros avanzados</span></button>
+        <button class="nav-item" data-target="formato"><span class="nav-icon amber">◩</span><span>Formato condicional</span></button>
+        <button class="nav-item" data-target="dinamicas"><span class="nav-icon cyan">▦</span><span>Tablas dinámicas</span></button>
+        <button class="nav-item" data-target="decisiones"><span class="nav-icon pink">⌁</span><span>Decisiones e IA</span></button>
+        <button class="nav-item" data-target="juegos"><span class="nav-icon orange">◆</span><span>Juegos</span></button>
+        <button class="nav-item" data-target="quiz"><span class="nav-icon red">?</span><span>Cuestionario</span></button>
+        <button class="nav-item" data-target="diploma"><span class="nav-icon gold">★</span><span>Diploma</span></button>
+      </nav>
+
+      <section class="tips-box" aria-label="Tips de Excel">
+        <div class="tips-title"><span>⚡</span><strong>Tips rápidos</strong></div>
+        <div class="shortcut"><kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>L</kbd><span>Activar filtros</span></div>
+        <div class="shortcut"><kbd>Alt</kbd> + <kbd>↓</kbd><span>Abrir filtro</span></div>
+        <div class="shortcut"><kbd>Ctrl</kbd> + <kbd>T</kbd><span>Crear tabla</span></div>
+        <div class="shortcut"><kbd>Ctrl</kbd> + <kbd>1</kbd><span>Formato de celdas</span></div>
+        <div class="shortcut"><kbd>Ctrl</kbd> + <kbd>↑↓←→</kbd><span>Ir al borde del rango</span></div>
+        <button id="completeTips" class="mini-btn">✓ Marcar tips revisados</button>
+      </section>
+
+      <div class="sidebar-footer">
+        <div id="studentMini" class="student-mini"></div>
+        <button id="logoutBtn" class="text-btn">Cerrar sesión</button>
+      </div>
+    </aside>
+
+    <div id="sidebarBackdrop" class="sidebar-backdrop"></div>
+
+    <main class="main-shell">
+      <header class="topbar">
+        <button id="menuBtn" class="menu-btn" aria-label="Abrir menú">☰</button>
+        <div class="topbar-title">
+          <span class="eyebrow dark">MICROSOFT EXCEL 365</span>
+          <strong>Análisis de datos para la toma de decisiones</strong>
+        </div>
+        <div class="progress-head">
+          <div class="progress-label"><span>Progreso</span><strong id="progressText">0%</strong></div>
+          <div class="progress-track"><span id="progressBar"></span></div>
+        </div>
+      </header>
+
+      <div class="content-wrap">
+        <section id="inicio" class="page-section active-section">
+          <div class="hero-card">
+            <div class="hero-copy">
+              <span class="pill">SEMANA 4 · EXCEL 365</span>
+              <h2>Analiza, interpreta y sustenta decisiones con datos</h2>
+              <p>Esta experiencia sigue la sesión de clase: organiza y depura información, aplica filtros y formato condicional, resume con tablas dinámicas y valida conclusiones con apoyo de IA.</p>
+              <div class="hero-actions">
+                <button class="primary-btn nav-jump" data-target="filtros">Comenzar ruta</button>
+                <button class="ghost-btn nav-jump" data-target="juegos">Ir a los juegos</button>
+              </div>
+              <div class="hero-stats">
+                <div><strong>4</strong><span>herramientas clave</span></div>
+                <div><strong>3</strong><span>juegos funcionales</span></div>
+                <div><strong>10</strong><span>preguntas finales</span></div>
+              </div>
+            </div>
+            <div class="hero-media">
+              <img src="assets/employability-banner.webp" alt="Estudiantes en taller de cómputo para la empleabilidad" />
+              <div class="floating-card"><span>Objetivo</span><strong>Pasar de datos crudos a decisiones justificadas.</strong></div>
+            </div>
+          </div>
+
+          <div class="section-heading">
+            <div><span class="eyebrow dark">RUTA DE APRENDIZAJE</span><h3>De la base de datos a la decisión</h3></div>
+            <p>Completa todas las actividades para desbloquear el diploma.</p>
+          </div>
+          <div class="learning-path">
+            <div class="path-card"><span>01</span><strong>Depurar</strong><p>Encabezados, tipos de datos, duplicados y registros inconsistentes.</p></div>
+            <div class="path-card"><span>02</span><strong>Filtrar</strong><p>Localiza información relevante y aplica criterios específicos.</p></div>
+            <div class="path-card"><span>03</span><strong>Destacar</strong><p>Visualiza valores críticos y tendencias con formato condicional.</p></div>
+            <div class="path-card"><span>04</span><strong>Resumir</strong><p>Compara resultados con tablas dinámicas.</p></div>
+            <div class="path-card"><span>05</span><strong>Decidir</strong><p>Formula mejoras sustentadas y contrástalas con IA.</p></div>
+          </div>
+
+          <div class="two-col">
+            <article class="image-card">
+              <img src="assets/excel-analysis.webp" alt="Estudiante analizando datos en Excel 365" />
+              <div><span class="pill pale">CASO GUÍA</span><h4>Presupuesto mensual</h4><p>Trabajarás con un escenario de presupuesto, igual que en la sesión: filtrar, identificar variaciones, resumir por categorías y fundamentar decisiones.</p></div>
+            </article>
+            <article class="image-card">
+              <img src="assets/professional-presentation.webp" alt="Presentación profesional en entorno SISE CPEX" />
+              <div><span class="pill pale">META PROFESIONAL</span><h4>Comunicar resultados</h4><p>El análisis no termina en la tabla: una conclusión útil explica qué pasó, por qué importa y qué acción se recomienda.</p></div>
+            </article>
+          </div>
+
+          <div class="gallery-strip" aria-label="Galería de la experiencia">
+            <img src="assets/canva-presentation.webp" alt="Diseño de presentación profesional" />
+            <img src="assets/canvas-upload.webp" alt="Carga de reporte final en plataforma" />
+            <img src="assets/team-work.webp" alt="Trabajo colaborativo profesional" />
+          </div>
+        </section>
+
+        <section id="filtros" class="page-section">
+          <div class="module-hero green-grad">
+            <div><span class="module-number">01</span><span class="eyebrow">TEORÍA + PRÁCTICA</span><h2>Filtros en Excel</h2><p>Reduce una base de datos a los registros que responden una pregunta concreta, sin eliminar información.</p></div>
+            <div class="excel-mark">X</div>
+          </div>
+          <div class="content-grid">
+            <article class="lesson-card wide">
+              <h3>¿Qué hace un filtro?</h3>
+              <p>Un filtro muestra temporalmente solo las filas que cumplen una condición. En un presupuesto, por ejemplo, puedes visualizar únicamente los gastos de <strong>Marketing</strong>, montos mayores a S/ 5,000 o registros de un mes determinado.</p>
+              <div class="infographic three">
+                <div><span>1</span><strong>Define la pregunta</strong><small>¿Qué necesito encontrar?</small></div><i>→</i>
+                <div><span>2</span><strong>Aplica el criterio</strong><small>Texto, número, fecha o color.</small></div><i>→</i>
+                <div><span>3</span><strong>Lee el resultado</strong><small>Interpreta el subconjunto visible.</small></div>
+              </div>
+              <div class="example-box"><strong>Ejemplo:</strong> filtra la columna <em>Variación</em> para mostrar valores mayores a 10%. Luego identifica qué categorías requieren atención.</div>
+            </article>
+            <article class="lesson-card">
+              <h3>Buenas prácticas</h3>
+              <ul class="check-list">
+                <li>Usa una sola fila de encabezados.</li><li>Evita filas o columnas totalmente vacías dentro del rango.</li><li>Revisa que números y fechas tengan el tipo correcto.</li><li>Indica en tu conclusión qué filtro aplicaste.</li>
+              </ul>
+            </article>
+            <article class="lesson-card video-card">
+              <h3>Video recomendado</h3>
+              <div class="video-wrap"><iframe src="https://www.youtube-nocookie.com/embed/ElWveAQUyps" title="Ordenar y filtrar datos en Excel" loading="lazy" allowfullscreen></iframe></div>
+              <p class="caption">Ordenar y filtrar datos en Excel · Saber Programas.</p>
+            </article>
+          </div>
+          <div class="complete-row"><button class="complete-module primary-btn" data-complete="theoryFilters">✓ Marcar módulo como estudiado</button></div>
+        </section>
+
+        <section id="avanzados" class="page-section">
+          <div class="module-hero violet-grad"><div><span class="module-number">02</span><span class="eyebrow">CRITERIOS COMPLEJOS</span><h2>Filtros avanzados</h2><p>Trabaja con rangos de criterios para combinar condiciones y extraer resultados específicos.</p></div><div class="excel-mark">ƒ</div></div>
+          <div class="content-grid">
+            <article class="lesson-card wide">
+              <h3>Cuándo usar un filtro avanzado</h3>
+              <p>Es útil cuando necesitas criterios <strong>AND / OR</strong> más estructurados, extraer resultados a otra ubicación o filtrar registros únicos. La clave es construir correctamente el <strong>rango de criterios</strong>.</p>
+              <div class="criteria-demo">
+                <div class="criteria-table"><div class="th">Área</div><div class="th">Gasto real</div><div>Ventas</div><div>&gt;5000</div><div>Marketing</div><div>&gt;8000</div></div>
+                <div class="logic-note"><strong>Filas distintas = OR</strong><span>Ventas &gt; 5000 <b>O</b> Marketing &gt; 8000</span><strong>Misma fila = AND</strong><span>Combina condiciones simultáneas.</span></div>
+              </div>
+              <div class="infographic four"><div><span>A</span><strong>Lista</strong><small>Base con encabezados</small></div><i>→</i><div><span>B</span><strong>Criterios</strong><small>Encabezados idénticos</small></div><i>→</i><div><span>C</span><strong>Acción</strong><small>Filtrar o copiar</small></div><i>→</i><div><span>D</span><strong>Validar</strong><small>Revisar coincidencias</small></div></div>
+            </article>
+            <article class="lesson-card">
+              <h3>Error frecuente</h3><div class="warning-box">⚠️ Si el encabezado del rango de criterios no coincide con el de la base, Excel puede devolver un resultado incorrecto o vacío.</div>
+              <h4>Checklist</h4><ul class="check-list"><li>Encabezados idénticos.</li><li>Criterios bien ubicados.</li><li>Rango completo sin celdas fusionadas.</li><li>Resultado verificado.</li></ul>
+            </article>
+            <article class="lesson-card video-card"><h3>Video recomendado</h3><div class="video-wrap"><iframe src="https://www.youtube-nocookie.com/embed/rB2CEDRUsnI" title="Filtros avanzados en Excel" loading="lazy" allowfullscreen></iframe></div><p class="caption">Filtros avanzados · Microsoft Excel a Todo Nivel.</p></article>
+          </div>
+          <div class="complete-row"><button class="complete-module primary-btn" data-complete="theoryAdvanced">✓ Marcar módulo como estudiado</button></div>
+        </section>
+
+        <section id="formato" class="page-section">
+          <div class="module-hero amber-grad"><div><span class="module-number">03</span><span class="eyebrow">LECTURA VISUAL</span><h2>Formato condicional</h2><p>Convierte números en señales visuales para detectar patrones, variaciones y valores críticos.</p></div><div class="excel-mark">◩</div></div>
+          <div class="content-grid">
+            <article class="lesson-card wide media-split">
+              <div><h3>De datos a señales</h3><p>El formato condicional cambia la apariencia de una celda según reglas. No modifica el valor; facilita la lectura.</p><ul class="check-list"><li><strong>Escalas de color:</strong> comparan magnitudes.</li><li><strong>Barras de datos:</strong> muestran proporciones.</li><li><strong>Conjuntos de iconos:</strong> clasifican estados.</li><li><strong>Reglas personalizadas:</strong> detectan situaciones específicas.</li></ul><div class="example-box"><strong>Presupuesto:</strong> resalta en rojo variaciones superiores al 15%, en ámbar entre 8% y 15% y en verde las desviaciones controladas.</div></div>
+              <img src="assets/conditional-formatting.webp" alt="Análisis con formato condicional en Excel" />
+            </article>
+            <article class="lesson-card"><h3>Decisión visual</h3><div class="traffic"><div class="traffic-row"><span class="dot green-dot"></span><b>Controlado</b><small>Dentro del rango esperado</small></div><div class="traffic-row"><span class="dot amber-dot"></span><b>Revisar</b><small>Variación moderada</small></div><div class="traffic-row"><span class="dot red-dot"></span><b>Crítico</b><small>Requiere acción inmediata</small></div></div></article>
+            <article class="lesson-card video-card"><h3>Video recomendado</h3><div class="video-wrap"><iframe src="https://www.youtube-nocookie.com/embed/dvrv49xPmCM" title="Formato condicional en Excel" loading="lazy" allowfullscreen></iframe></div><p class="caption">Formato condicional de básico a avanzado · EXCELeINFO.</p></article>
+          </div>
+          <div class="complete-row"><button class="complete-module primary-btn" data-complete="theoryConditional">✓ Marcar módulo como estudiado</button></div>
+        </section>
+
+        <section id="dinamicas" class="page-section">
+          <div class="module-hero cyan-grad"><div><span class="module-number">04</span><span class="eyebrow">RESUMEN INTERACTIVO</span><h2>Tablas dinámicas</h2><p>Resume, agrupa y compara grandes volúmenes de datos sin alterar la base original.</p></div><div class="excel-mark">▦</div></div>
+          <div class="content-grid">
+            <article class="lesson-card wide media-split reverse">
+              <img src="assets/pivot-tables.webp" alt="Tabla dinámica y gráficos de presupuesto" />
+              <div><h3>Los cuatro espacios que debes dominar</h3><div class="pivot-zones"><div><span>FILAS</span><b>¿Qué quiero comparar?</b></div><div><span>COLUMNAS</span><b>¿Qué categorías cruzo?</b></div><div><span>VALORES</span><b>¿Qué medida calculo?</b></div><div><span>FILTROS</span><b>¿Qué contexto delimito?</b></div></div><p>En la sesión, la tabla dinámica se usa para resumir y comparar información del presupuesto antes de formular decisiones.</p></div>
+            </article>
+            <article class="lesson-card"><h3>Ejemplo profesional</h3><p>Coloca <strong>Área</strong> en Filas, <strong>Mes</strong> en Columnas y <strong>Gasto real</strong> en Valores. Luego filtra por centro de costo.</p><div class="formula-chip">Suma de Gasto Real → por Área → por Mes</div></article>
+            <article class="lesson-card video-card"><h3>Video recomendado</h3><div class="video-wrap"><iframe src="https://www.youtube-nocookie.com/embed/gbEr7ugjWlE" title="Tablas dinámicas en Excel" loading="lazy" allowfullscreen></iframe></div><p class="caption">Tablas dinámicas explicadas paso a paso · Ciudadano 2.0.</p></article>
+          </div>
+          <div class="complete-row"><button class="complete-module primary-btn" data-complete="theoryPivot">✓ Marcar módulo como estudiado</button></div>
+        </section>
+
+        <section id="decisiones" class="page-section">
+          <div class="module-hero blue-grad"><div><span class="module-number">05</span><span class="eyebrow">INTERPRETAR + VALIDAR</span><h2>Toma de decisiones e IA</h2><p>Transforma los resultados en conclusiones verificables y usa la IA como apoyo, no como sustituto del criterio.</p></div><div class="excel-mark">AI</div></div>
+          <div class="content-grid">
+            <article class="lesson-card wide media-split"><div><h3>Una conclusión sólida tiene evidencia</h3><div class="decision-chain"><div><span>1</span><b>Hallazgo</b><small>“Operaciones supera el presupuesto en 18%”.</small></div><div><span>2</span><b>Interpretación</b><small>“La desviación se concentra en dos meses”.</small></div><div><span>3</span><b>Decisión</b><small>“Revisar contratos y topes de gasto de esos meses”.</small></div></div><div class="quote-box">“La IA puede sugerir una explicación; el estudiante debe contrastarla con filtros, cálculos, formato condicional y tabla dinámica.”</div></div><img src="assets/data-decisions.webp" alt="Estudiante tomando decisiones basadas en datos" /></article>
+            <article class="lesson-card media-stack"><img src="assets/ai-analysis.webp" alt="Análisis asistido por IA en Excel" /><div><h3>Uso responsable de IA</h3><ul class="check-list"><li>Comparar la sugerencia con los datos.</li><li>Detectar afirmaciones sin evidencia.</li><li>Aceptar, ajustar o descartar con justificación.</li><li>No inventar cifras ni conclusiones.</li></ul></div></article>
+            <article class="lesson-card media-stack"><img src="assets/canvas-upload.webp" alt="Entrega de reporte final" /><div><h3>Cierre de la sesión</h3><p>Revisa la coherencia entre datos, cálculos, tabla dinámica y conclusiones. Luego presenta tres decisiones de mejora y entrega la versión final.</p></div></article>
+          </div>
+          <div class="complete-row"><button class="complete-module primary-btn" data-complete="theoryDecisions">✓ Marcar módulo como estudiado</button></div>
+        </section>
+
+        <section id="juegos" class="page-section">
+          <div class="module-hero game-grad"><div><span class="module-number">PLAY</span><span class="eyebrow">APRENDER HACIENDO</span><h2>Zona de juegos</h2><p>Refuerza conceptos de Excel con tres retos. Todos validan respuestas en tiempo real.</p></div><div class="excel-mark">◆</div></div>
+          <div class="game-tabs" role="tablist">
+            <button class="game-tab active" data-game="crosswordGame">Crucigrama <span id="crossBadge">○</span></button>
+            <button class="game-tab" data-game="logicGame">Reto mental <span id="logicBadge">○</span></button>
+            <button class="game-tab" data-game="wordsearchGame">Sopa de letras <span id="wordBadge">○</span></button>
+          </div>
+
+          <div id="crosswordGame" class="game-panel active-game">
+            <div class="game-layout">
+              <div><h3>Crucigrama Excel</h3><p>Completa las 8 palabras. Las letras se validan mientras escribes.</p><div id="crosswordGrid" class="crossword-grid" aria-label="Crucigrama"></div></div>
+              <div class="clue-card"><h4>Pistas</h4><ol id="crosswordClues"></ol><button id="resetCrossword" class="ghost-btn">Reiniciar crucigrama</button></div>
+            </div>
+          </div>
+
+          <div id="logicGame" class="game-panel">
+            <div class="logic-head"><div><h3>Reto mental: ¿qué harías en Excel?</h3><p>Elige la mejor herramienta para cada situación.</p></div><div class="score-orb"><span id="logicScore">0</span><small>/ 6</small></div></div>
+            <div id="logicCases" class="logic-cases"></div>
+            <button id="resetLogic" class="ghost-btn">Reiniciar reto</button>
+          </div>
+
+          <div id="wordsearchGame" class="game-panel">
+            <div class="wordsearch-head"><div><h3>Sopa de letras · 10 palabras</h3><p>Haz clic en la primera y luego en la última letra de cada palabra. Se permiten líneas horizontales, verticales y diagonales.</p></div><div class="found-counter"><strong id="foundCount">0</strong><span>/10 encontradas</span></div></div>
+            <div class="wordsearch-layout"><div id="wordsearchGrid" class="wordsearch-grid" aria-label="Sopa de letras"></div><div class="word-list-card"><h4>Palabras clave</h4><div id="wordList" class="word-list"></div><button id="resetWordsearch" class="ghost-btn">Reiniciar sopa</button></div></div>
+          </div>
+        </section>
+
+        <section id="quiz" class="page-section">
+          <div class="module-hero quiz-grad"><div><span class="module-number">10Q</span><span class="eyebrow">EVALUACIÓN FORMATIVA</span><h2>Cuestionario final</h2><p>Responde las 10 preguntas. Verás qué respuestas son correctas e incorrectas y recibirás retroalimentación inmediata.</p></div><div class="excel-mark">?</div></div>
+          <form id="quizForm" class="quiz-form"></form>
+          <div class="quiz-actions"><button id="submitQuiz" class="primary-btn" type="button">Calificar cuestionario</button><button id="resetQuiz" class="ghost-btn" type="button">Limpiar respuestas</button></div>
+          <div id="quizResult" class="quiz-result hidden"></div>
+        </section>
+
+        <section id="diploma" class="page-section">
+          <div class="module-hero diploma-grad"><div><span class="module-number">★</span><span class="eyebrow">META FINAL</span><h2>Diploma de finalización</h2><p>Se desbloquea al completar teoría, tips, los tres juegos y el cuestionario.</p></div><div class="excel-mark">✓</div></div>
+          <div id="diplomaLocked" class="locked-card">
+            <div class="lock-icon">🔒</div><h3>Aún falta completar actividades</h3><p id="lockMessage">Tu diploma se habilitará cuando el progreso llegue al 100%.</p>
+            <div class="check-progress" id="diplomaChecklist"></div>
+          </div>
+          <div id="diplomaUnlocked" class="diploma-area hidden">
+            <div class="celebrate-banner"><span>🎉</span><div><strong>¡Excelente trabajo!</strong><p>Terminaste la ruta de análisis de datos en Excel 365.</p></div></div>
+            <canvas id="diplomaCanvas" width="1600" height="1131" aria-label="Vista previa del diploma"></canvas>
+            <div class="diploma-actions"><button id="downloadDiploma" class="primary-btn">⬇ Descargar diploma en PDF</button><button id="printDiploma" class="ghost-btn">🖨 Imprimir</button></div>
+          </div>
+          <div class="reset-area"><button id="resetProgress" class="text-btn danger">Reiniciar todo mi progreso</button></div>
+        </section>
+      </div>
+
+      <footer class="app-footer"><span>SISE · Taller de Informática para la Empleabilidad</span><span>Excel 365 · Semana 4</span></footer>
+    </main>
+  </div>
+
+  <div id="confetti" class="confetti" aria-hidden="true"></div>
+  <script src="app.js"></script>
+</body>
+</html>
