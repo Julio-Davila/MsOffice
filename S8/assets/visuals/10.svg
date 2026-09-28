@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675">
+    <defs>
+      <linearGradient id="g" x1="0" x2="1"><stop stop-color="#9d2e17"/><stop offset="1" stop-color="#d24726"/></linearGradient>
+      <filter id="s"><feDropShadow dx="0" dy="14" stdDeviation="18" flood-opacity=".16"/></filter>
+    </defs>
+    <rect width="1200" height="675" fill="#f7f7f9"/>
+    <rect x="46" y="44" width="1108" height="587" rx="38" fill="white" filter="url(#s)"/>
+    <rect x="46" y="44" width="20" height="587" rx="10" fill="url(#g)"/>
+    <text x="105" y="120" font-family="Arial" font-size="26" font-weight="700" fill="#d24726">POWERPOINT IA · 10</text>
+    <text x="105" y="225" font-family="Arial" font-size="62" font-weight="800" fill="#171820">ENTREGA FINAL</text>
+    <text x="105" y="294" font-family="Arial" font-size="28" fill="#686b74">Revisa narrativa, diseño y contenido antes de enviar.</text>
+    <rect x="105" y="365" width="760" height="112" rx="20" fill="#fff0eb" stroke="#ffd3c7"/>
+    <text x="145" y="433" font-family="Arial" font-size="30" font-weight="700" fill="#9d2e17">REVISAR → AJUSTAR → ENTREGAR</text>
+    <circle cx="1010" cy="338" r="104" fill="url(#g)"/>
+    <text x="1010" y="364" text-anchor="middle" font-family="Arial" font-size="76" font-weight="800" fill="white">◆</text>
+    <text x="105" y="560" font-family="Arial" font-size="20" fill="#8b8d95">SISE · Taller de Informática para la Empleabilidad</text>
+    </svg>

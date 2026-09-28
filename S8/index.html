@@ -1,1 +1,473 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#d24726" />
+  <meta name="description" content="Plataforma educativa SISE: PowerPoint con IA (Copilot), storytelling y uso ético de IA." />
+  <title>SISE | PowerPoint con IA</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
 
+  
+  
+  <div id="welcomeModal" class="modal show welcome-fullscreen" role="dialog" aria-modal="true" aria-labelledby="welcomeTitle">
+    <div class="welcome-bg-slider" id="welcomeBgSlider" aria-hidden="true">
+      <div class="welcome-bg-slide active" style="background-image:url('assets/photos/10_Portada_Grupo_SISE_PowerPoint_IA.png')"></div>
+      <div class="welcome-bg-slide" style="background-image:url('assets/photos/01_Colaboracion_PowerPoint_IA_SISE.png')"></div>
+      <div class="welcome-bg-slide" style="background-image:url('assets/photos/02_Presentacion_Aula_SISE.png')"></div>
+      <div class="welcome-bg-slide" style="background-image:url('assets/photos/03_Estudiante_PowerPoint_Copilot.png')"></div>
+      <div class="welcome-bg-slide" style="background-image:url('assets/photos/04_Celebracion_Certificados_SISE.png')"></div>
+      <div class="welcome-bg-slide" style="background-image:url('assets/photos/05_Laboratorio_Presentaciones_IA.png')"></div>
+      <div class="welcome-bg-slide" style="background-image:url('assets/photos/06_Estudiante_Creando_con_IA.png')"></div>
+      <div class="welcome-bg-slide" style="background-image:url('assets/photos/07_Trabajo_Equipo_Storytelling_IA.png')"></div>
+      <div class="welcome-bg-slide" style="background-image:url('assets/photos/08_Clase_Hibrida_PowerPoint_IA.png')"></div>
+      <div class="welcome-bg-slide" style="background-image:url('assets/photos/09_Taller_Presentaciones_Impacto.png')"></div>
+    </div>
+
+    <div class="welcome-center-wrap">
+      <div class="welcome-center-card">
+        <div class="welcome-center-top">
+          <img src="assets/sise-logo.png" alt="Logo SISE" class="welcome-logo large" />
+          <span class="power-badge center-badge">P</span>
+        </div>
+
+        <p class="eyebrow welcome-center-eyebrow">AULA INTERACTIVA · POWERPOINT CON IA</p>
+        <h1 id="welcomeTitle" class="welcome-center-title">Bienvenido a tu experiencia <span>PowerPoint + IA</span></h1>
+        <p class="welcome-center-subtitle">Aprende a diseñar presentaciones impactantes con <b>Copilot, storytelling, diseño visual y uso ético de IA</b>, dentro de una experiencia moderna, profesional y totalmente interactiva.</p>
+
+        <div class="welcome-center-tags">
+          <span>🎨 Diseño profesional</span>
+          <span>🤖 IA aplicada</span>
+          <span>📣 Storytelling</span>
+          <span>🏅 Diploma final</span>
+        </div>
+
+        <form id="loginForm" class="login-form centered-form" novalidate>
+          <label>Nombre completo
+            <input id="studentName" type="text" autocomplete="name" placeholder="Ej. Ana Torres Salazar" required minlength="4" />
+          </label>
+          <label>Correo
+            <input id="studentEmail" type="email" autocomplete="email" placeholder="nombre@correo.com" required />
+          </label>
+          <label>Clave de acceso
+            <div class="password-wrap">
+              <input id="accessKey" type="password" placeholder="••••••••" required />
+              <button type="button" id="togglePassword" class="icon-btn" aria-label="Mostrar u ocultar clave">👁</button>
+            </div>
+            <small>Clave protegida con validación SHA-256.</small>
+          </label>
+          <button class="btn primary full" type="submit">Ingresar a mi aula</button>
+          <p id="loginError" class="form-error" role="alert"></p>
+        </form>
+
+        <div class="welcome-center-stats">
+          <div><b>10</b><span>imágenes de fondo dinámicas</span></div>
+          <div><b>3</b><span>juegos interactivos</span></div>
+          <div><b>10</b><span>preguntas para desbloquear diploma</span></div>
+        </div>
+
+        <div class="welcome-slider-dots" id="welcomeSliderDots" aria-label="Indicadores del fondo"></div>
+        <p class="microcopy centered-microcopy">“Aprende, diseña, comunica e impacta con una presentación que cuente una historia.”</p>
+      </div>
+    </div>
+  </div>
+
+
+  <header class="topbar">
+    <button id="menuBtn" class="hamburger" aria-label="Abrir menú" aria-controls="sidebar" aria-expanded="false">☰</button>
+    <div class="top-brand">
+      <img src="assets/sise-logo.png" alt="SISE" />
+      <div><strong>PowerPoint IA Lab</strong><span>Semana 8 · Taller de Informática para la Empleabilidad</span></div>
+    </div>
+    <div class="user-chip">
+      <div class="avatar" id="avatar">E</div>
+      <div><strong id="userNameTop">Estudiante</strong><span id="progressTop">0% completado</span></div>
+    </div>
+  </header>
+
+  <aside id="sidebar" class="sidebar" aria-label="Navegación principal">
+    <div class="sidebar-head">
+      <img src="assets/sise-logo.png" alt="SISE" />
+      <button id="closeMenuBtn" class="close-menu" aria-label="Cerrar menú">×</button>
+    </div>
+
+    <nav id="nav">
+      <button class="nav-item active" data-section="inicio"><span class="nav-icon c1">⌂</span><span>Inicio</span></button>
+      <button class="nav-item" data-section="teoria"><span class="nav-icon c2">▤</span><span>Teoría</span><i id="dotTheory"></i></button>
+      <button class="nav-item" data-section="tips"><span class="nav-icon c3">⌨</span><span>Tips y atajos</span><i id="dotTips"></i></button>
+      <button class="nav-item" data-section="videos"><span class="nav-icon c4">▶</span><span>Videos</span></button>
+      <button class="nav-item" data-section="infografias"><span class="nav-icon c5">◫</span><span>Infografías</span></button>
+      <button class="nav-item" data-section="juegos"><span class="nav-icon c6">★</span><span>Juegos</span><i id="dotGames"></i></button>
+      <button class="nav-item" data-section="quiz"><span class="nav-icon c7">?</span><span>Cuestionario</span><i id="dotQuiz"></i></button>
+      <button class="nav-item" data-section="diploma"><span class="nav-icon c8">◆</span><span>Diploma</span></button>
+    </nav>
+
+    <div class="sidebar-tip">
+      <span class="tip-label">TIP RÁPIDO</span>
+      <p id="quickTip">En presentación, presiona <kbd>F5</kbd> para iniciar desde la primera diapositiva.</p>
+      <button id="nextTipBtn" class="text-btn">Otro tip →</button>
+    </div>
+
+    <button id="logoutBtn" class="logout-btn">↪ Cerrar sesión</button>
+  </aside>
+  <div id="overlay" class="overlay"></div>
+
+  <main class="main">
+    <section id="inicio" class="section active">
+      <div class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow light">MICROCURSO INTERACTIVO</p>
+          <h2>Diseña una presentación que <span>cuente una historia</span> con apoyo de IA.</h2>
+          <p>Aprende a estructurar, mejorar y revisar una presentación profesional en PowerPoint 365 usando Copilot con criterio humano.</p>
+          <div class="hero-actions">
+            <button class="btn light" data-go="teoria">Comenzar recorrido</button>
+            <button class="btn ghost-light" data-go="juegos">Ir a los juegos</button>
+          </div>
+        </div>
+        <div class="hero-visual hero-photo-carousel" aria-label="Galería destacada de estudiantes SISE">
+          <div class="hero-photo-shell">
+            <img id="heroPhoto" src="assets/photos/10_Portada_Grupo_SISE_PowerPoint_IA.png" alt="Estudiantes SISE aprendiendo PowerPoint con IA" />
+            <div class="hero-photo-gradient"></div>
+            <div class="hero-photo-caption">
+              <span id="heroPhotoCount">01 / 10</span>
+              <strong id="heroPhotoTitle">PowerPoint + IA en acción</strong>
+              <small id="heroPhotoText">Aprende, diseña, comunica y presenta con impacto.</small>
+            </div>
+            <button type="button" class="hero-photo-nav prev" id="heroPrev" aria-label="Imagen anterior">‹</button>
+            <button type="button" class="hero-photo-nav next" id="heroNext" aria-label="Imagen siguiente">›</button>
+          </div>
+          <div class="hero-dots" id="heroDots" aria-label="Selector de imágenes"></div>
+        </div>
+      </div>
+
+      <div class="progress-panel card">
+        <div>
+          <span class="eyebrow">TU RUTA DE APRENDIZAJE</span>
+          <h3>Progreso general</h3>
+        </div>
+        <div class="progress-ring" id="progressRing"><strong id="progressPercent">0%</strong><span>completo</span></div>
+        <div class="progress-track"><span id="progressBar"></span></div>
+        <p id="progressMessage">Completa teoría, tips, los 3 juegos y el cuestionario para desbloquear tu diploma.</p>
+      </div>
+
+      <div class="module-grid">
+        <article class="module-card" data-go="teoria"><span>01</span><div><h4>Estructura profesional</h4><p>Propósito, audiencia, secuencia y mensaje central.</p></div></article>
+        <article class="module-card" data-go="teoria"><span>02</span><div><h4>Copilot aplicado</h4><p>Prompts, síntesis, títulos y alternativas de contenido.</p></div></article>
+        <article class="module-card" data-go="teoria"><span>03</span><div><h4>Storytelling</h4><p>Inicio, desarrollo y cierre con conexión narrativa.</p></div></article>
+        <article class="module-card" data-go="teoria"><span>04</span><div><h4>Uso ético de IA</h4><p>Veracidad, revisión humana y protección de información.</p></div></article>
+      </div>
+    </section>
+
+    <section id="teoria" class="section">
+      <div class="section-head">
+        <div><p class="eyebrow">MÓDULO 1</p><h2>Teoría esencial</h2><p>Domina los criterios que convierten un boceto en una presentación profesional.</p></div>
+        <div class="section-quote">“La IA propone; tú decides, verificas y comunicas.”</div>
+      </div>
+
+      <div class="theory-grid">
+        <article class="card theory-card">
+          <div class="topic-icon">🎯</div>
+          <h3>1. Propósito y audiencia</h3>
+          <p>Antes de abrir PowerPoint, define <b>qué quieres lograr</b>, quién verá tu presentación y cuál es la idea principal que debe recordar.</p>
+          <ul><li>Mensaje central claro.</li><li>Audiencia identificada.</li><li>Secuencia de ideas alineada al objetivo.</li></ul>
+        </article>
+        <article class="card theory-card">
+          <div class="topic-icon">✨</div>
+          <h3>2. Copilot como apoyo</h3>
+          <p>Copilot puede ayudar a proponer una estructura inicial, mejorar títulos, sintetizar ideas y generar alternativas de contenido.</p>
+          <div class="prompt-box"><b>Prompt modelo</b><code>Crea una estructura de 6 diapositivas para presentar mi perfil profesional a reclutadores. Usa un tono claro, breve y orientado a logros.</code></div>
+        </article>
+        <article class="card theory-card">
+          <div class="topic-icon">🧭</div>
+          <h3>3. Storytelling</h3>
+          <p>Organiza el contenido como una historia: una apertura que capta atención, un desarrollo que demuestra valor y un cierre que deja una idea o acción concreta.</p>
+          <div class="story-flow"><span>INICIO<small>Contexto + reto</small></span><b>→</b><span>DESARROLLO<small>Evidencia + valor</small></span><b>→</b><span>CIERRE<small>Conclusión + acción</small></span></div>
+        </article>
+        <article class="card theory-card">
+          <div class="topic-icon">🎨</div>
+          <h3>4. Diseño profesional</h3>
+          <p>Prioriza jerarquía visual, legibilidad, consistencia y equilibrio entre texto e imagen. Cada diapositiva debe comunicar una idea principal.</p>
+          <div class="design-rules"><span><b>1</b> idea clave</span><span><b>3</b> niveles visuales máx.</span><span><b>∞</b> coherencia</span></div>
+        </article>
+        <article class="card theory-card wide">
+          <div class="topic-icon">🛡️</div>
+          <h3>5. Uso ético y revisión crítica de IA</h3>
+          <p>No copies automáticamente una respuesta generada por IA. Comprueba la veracidad, protege información sensible, revisa el contexto y conserva solo lo pertinente.</p>
+          <div class="ethics-grid">
+            <span>✓ Verificar información</span><span>✓ Revisar antes de publicar</span><span>✓ Proteger datos</span><span>✓ Distinguir aportes propios e IA</span>
+          </div>
+        </article>
+      </div>
+      <div class="theory-photo-strip">
+        <article><img src="assets/photos/03_Estudiante_PowerPoint_Copilot.png" loading="lazy" alt="Estudiante trabajando con Copilot" /><div><b>Copilot con criterio</b><span>La IA ayuda a proponer y mejorar; el estudiante revisa y decide.</span></div></article>
+        <article><img src="assets/photos/07_Trabajo_Equipo_Storytelling_IA.png" loading="lazy" alt="Estudiantes planificando storytelling" /><div><b>Storytelling colaborativo</b><span>Ordena la historia antes de diseñar la diapositiva.</span></div></article>
+        <article><img src="assets/photos/09_Taller_Presentaciones_Impacto.png" loading="lazy" alt="Taller de presentaciones con impacto" /><div><b>Comunicación profesional</b><span>Diseño, estructura y exposición trabajan juntos.</span></div></article>
+      </div>
+      <div class="complete-wrap">
+        <button id="completeTheory" class="btn primary">✓ He revisado toda la teoría</button>
+        <span id="theoryStatus" class="status-text"></span>
+      </div>
+    </section>
+
+    <section id="tips" class="section">
+      <div class="section-head">
+        <div><p class="eyebrow">MÓDULO 2</p><h2>Tips y atajos de PowerPoint</h2><p>Pequeñas acciones que mejoran velocidad, orden y seguridad al presentar.</p></div>
+        <div class="section-quote">“Menos clics. Más tiempo para pensar y diseñar.”</div>
+      </div>
+      <div class="shortcut-grid">
+        <article class="shortcut"><kbd>Ctrl</kbd> + <kbd>M</kbd><div><b>Nueva diapositiva</b><span>Inserta una diapositiva rápidamente.</span></div></article>
+        <article class="shortcut"><kbd>Ctrl</kbd> + <kbd>D</kbd><div><b>Duplicar</b><span>Duplica el objeto o diapositiva seleccionada.</span></div></article>
+        <article class="shortcut"><kbd>F5</kbd><div><b>Presentar desde inicio</b><span>Inicia la presentación desde la primera diapositiva.</span></div></article>
+        <article class="shortcut"><kbd>Shift</kbd> + <kbd>F5</kbd><div><b>Presentar desde actual</b><span>Ideal para probar una parte específica.</span></div></article>
+        <article class="shortcut"><kbd>Ctrl</kbd> + <kbd>G</kbd><div><b>Agrupar objetos</b><span>Mueve y edita varios objetos como uno.</span></div></article>
+        <article class="shortcut"><kbd>Ctrl</kbd> + <kbd>K</kbd><div><b>Insertar vínculo</b><span>Agrega enlaces a recursos o navegación interna.</span></div></article>
+      </div>
+      <div class="tips-grid">
+        <article class="card tip-card"><span>01</span><h3>Una idea por diapositiva</h3><p>Divide información compleja. La diapositiva apoya tu discurso; no debe reemplazarlo.</p></article>
+        <article class="card tip-card"><span>02</span><h3>Prompts con contexto</h3><p>Indica audiencia, objetivo, número de diapositivas, tono y límites para obtener mejores propuestas de Copilot.</p></article>
+        <article class="card tip-card"><span>03</span><h3>Verifica todo</h3><p>Contrasta datos, nombres, cifras y afirmaciones. La responsabilidad final del contenido sigue siendo humana.</p></article>
+        <article class="card tip-card"><span>04</span><h3>Consistencia visual</h3><p>Mantén tipografías, márgenes, alineación, estilo gráfico y paleta coherentes a lo largo del deck.</p></article>
+      </div>
+      <div class="complete-wrap">
+        <button id="completeTips" class="btn primary">✓ He revisado los tips y atajos</button>
+        <span id="tipsStatus" class="status-text"></span>
+      </div>
+    </section>
+
+    <section id="videos" class="section">
+      <div class="section-head">
+        <div><p class="eyebrow">RECURSOS</p><h2>Videos de apoyo</h2><p>Recursos incrustados para observar PowerPoint y Copilot en acción.</p></div>
+      </div>
+      <div class="video-grid">
+        <article class="video-card card">
+          <div class="video-frame"><iframe src="https://www.youtube.com/embed/fzoZ_f7ji5Q" title="Microsoft 365 Copilot in PowerPoint" loading="lazy" allowfullscreen></iframe></div>
+          <h3>Microsoft 365 Copilot en PowerPoint</h3><p>Demostración oficial de Microsoft 365 sobre creación, síntesis y edición asistida.</p>
+        </article>
+        <article class="video-card card">
+          <div class="video-frame"><iframe src="https://www.youtube.com/embed/ebls5x-gb0s" title="Microsoft 365 Copilot" loading="lazy" allowfullscreen></iframe></div>
+          <h3>Copilot integrado a Microsoft 365</h3><p>Visión general de cómo Copilot se integra con las aplicaciones de Microsoft 365.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="infografias" class="section">
+      <div class="section-head">
+        <div><p class="eyebrow">EXPERIENCIA VISUAL</p><h2>Galería ultrarrealista PowerPoint + IA</h2><p>10 escenas creadas para reforzar la identidad visual de la sesión: estudiantes, colaboración, presentación, storytelling, Copilot y comunicación profesional.</p></div>
+        <div class="section-quote">“Observa el contexto, identifica la intención visual y piensa cómo contarías la historia en diapositivas.”</div>
+      </div>
+
+      <div class="gallery-feature card">
+        <div>
+          <span class="eyebrow">NUEVA VERSIÓN VISUAL</span>
+          <h3>Aprendizaje conectado con situaciones reales</h3>
+          <p>Las imágenes se integran como apoyo visual para contextualizar los contenidos y hacer la navegación más atractiva. Pulsa cualquier imagen para verla a pantalla ampliada.</p>
+        </div>
+        <img src="assets/photos/01_Colaboracion_PowerPoint_IA_SISE.png" alt="Estudiantes colaborando con PowerPoint e IA" />
+      </div>
+
+      <div class="photo-gallery" id="photoGallery">
+        <figure class="photo-card" data-photo-index="0">
+          <button type="button" class="photo-open" aria-label="Ampliar imagen 1">
+            <img src="assets/photos/01_Colaboracion_PowerPoint_IA_SISE.png" loading="lazy" alt="Colaboración: estudiantes crean una presentación profesional con apoyo de IA." />
+            <span class="photo-zoom">⤢</span>
+          </button>
+          <figcaption><b>01.</b> Colaboración: estudiantes crean una presentación profesional con apoyo de IA.</figcaption>
+        </figure>
+        <figure class="photo-card" data-photo-index="1">
+          <button type="button" class="photo-open" aria-label="Ampliar imagen 2">
+            <img src="assets/photos/02_Presentacion_Aula_SISE.png" loading="lazy" alt="Presentación en aula: comunicación visual, storytelling y diseño de alto impacto." />
+            <span class="photo-zoom">⤢</span>
+          </button>
+          <figcaption><b>02.</b> Presentación en aula: comunicación visual, storytelling y diseño de alto impacto.</figcaption>
+        </figure>
+        <figure class="photo-card" data-photo-index="2">
+          <button type="button" class="photo-open" aria-label="Ampliar imagen 3">
+            <img src="assets/photos/03_Estudiante_PowerPoint_Copilot.png" loading="lazy" alt="Trabajo individual: estudiante mejora una presentación con Copilot." />
+            <span class="photo-zoom">⤢</span>
+          </button>
+          <figcaption><b>03.</b> Trabajo individual: estudiante mejora una presentación con Copilot.</figcaption>
+        </figure>
+        <figure class="photo-card" data-photo-index="3">
+          <button type="button" class="photo-open" aria-label="Ampliar imagen 4">
+            <img src="assets/photos/04_Celebracion_Certificados_SISE.png" loading="lazy" alt="Meta alcanzada: cierre de la experiencia y reconocimiento del aprendizaje." />
+            <span class="photo-zoom">⤢</span>
+          </button>
+          <figcaption><b>04.</b> Meta alcanzada: cierre de la experiencia y reconocimiento del aprendizaje.</figcaption>
+        </figure>
+        <figure class="photo-card" data-photo-index="4">
+          <button type="button" class="photo-open" aria-label="Ampliar imagen 5">
+            <img src="assets/photos/05_Laboratorio_Presentaciones_IA.png" loading="lazy" alt="Laboratorio creativo: diseño de presentaciones con IA en un entorno colaborativo." />
+            <span class="photo-zoom">⤢</span>
+          </button>
+          <figcaption><b>05.</b> Laboratorio creativo: diseño de presentaciones con IA en un entorno colaborativo.</figcaption>
+        </figure>
+        <figure class="photo-card" data-photo-index="5">
+          <button type="button" class="photo-open" aria-label="Ampliar imagen 6">
+            <img src="assets/photos/06_Estudiante_Creando_con_IA.png" loading="lazy" alt="Creación con propósito: ideas, audiencia, mensaje, diseño y resultado." />
+            <span class="photo-zoom">⤢</span>
+          </button>
+          <figcaption><b>06.</b> Creación con propósito: ideas, audiencia, mensaje, diseño y resultado.</figcaption>
+        </figure>
+        <figure class="photo-card" data-photo-index="6">
+          <button type="button" class="photo-open" aria-label="Ampliar imagen 7">
+            <img src="assets/photos/07_Trabajo_Equipo_Storytelling_IA.png" loading="lazy" alt="Trabajo en equipo: estructura, narrativa y planificación de una presentación." />
+            <span class="photo-zoom">⤢</span>
+          </button>
+          <figcaption><b>07.</b> Trabajo en equipo: estructura, narrativa y planificación de una presentación.</figcaption>
+        </figure>
+        <figure class="photo-card" data-photo-index="7">
+          <button type="button" class="photo-open" aria-label="Ampliar imagen 8">
+            <img src="assets/photos/08_Clase_Hibrida_PowerPoint_IA.png" loading="lazy" alt="Clase híbrida: revisión de contenido y mejora de diapositivas con IA." />
+            <span class="photo-zoom">⤢</span>
+          </button>
+          <figcaption><b>08.</b> Clase híbrida: revisión de contenido y mejora de diapositivas con IA.</figcaption>
+        </figure>
+        <figure class="photo-card" data-photo-index="8">
+          <button type="button" class="photo-open" aria-label="Ampliar imagen 9">
+            <img src="assets/photos/09_Taller_Presentaciones_Impacto.png" loading="lazy" alt="Taller práctico: diseño con IA, storytelling y comunicación profesional." />
+            <span class="photo-zoom">⤢</span>
+          </button>
+          <figcaption><b>09.</b> Taller práctico: diseño con IA, storytelling y comunicación profesional.</figcaption>
+        </figure>
+        <figure class="photo-card" data-photo-index="9">
+          <button type="button" class="photo-open" aria-label="Ampliar imagen 10">
+            <img src="assets/photos/10_Portada_Grupo_SISE_PowerPoint_IA.png" loading="lazy" alt="Portada inspiradora: estudiantes SISE, PowerPoint e Inteligencia Artificial." />
+            <span class="photo-zoom">⤢</span>
+          </button>
+          <figcaption><b>10.</b> Portada inspiradora: estudiantes SISE, PowerPoint e Inteligencia Artificial.</figcaption>
+        </figure>
+      </div>
+
+      <div class="visual-divider">
+        <span></span><b>REPASO VISUAL DE CONCEPTOS</b><span></span>
+      </div>
+
+      <div class="visual-gallery">
+        <img src="assets/visuals/01.svg" alt="Propósito de una presentación" />
+        <img src="assets/visuals/02.svg" alt="Audiencia y mensaje" />
+        <img src="assets/visuals/03.svg" alt="Storytelling" />
+        <img src="assets/visuals/04.svg" alt="Copilot y prompts" />
+        <img src="assets/visuals/05.svg" alt="Jerarquía visual" />
+        <img src="assets/visuals/06.svg" alt="Legibilidad" />
+        <img src="assets/visuals/07.svg" alt="Consistencia" />
+        <img src="assets/visuals/08.svg" alt="Uso ético de IA" />
+        <img src="assets/visuals/09.svg" alt="Revisión crítica" />
+        <img src="assets/visuals/10.svg" alt="Entrega final" />
+      </div>
+    </section>
+
+    <section id="juegos" class="section">
+      <div class="section-head">
+        <div><p class="eyebrow">MÓDULO 3</p><h2>Juegos educativos</h2><p>Completa los tres juegos. La validación es inmediata y tu progreso se guarda.</p></div>
+        <div class="section-quote">“Jugar también es practicar: reconoce, relaciona y recuerda.”</div>
+      </div>
+
+      <div class="tabs" role="tablist">
+        <button class="tab active" data-tab="crossword">Crucigrama</button>
+        <button class="tab" data-tab="memory">Memoria</button>
+        <button class="tab" data-tab="wordsearch">Sopa de letras</button>
+      </div>
+
+      <div id="crossword" class="tab-panel active">
+        <div class="game-layout">
+          <div class="card game-card">
+            <h3>Crucigrama PowerPoint</h3>
+            <p>Escribe la respuesta de cada pista. Al acertar, las letras se revelan en el tablero.</p>
+            <div id="crosswordGrid" class="crossword-grid" aria-label="Tablero de crucigrama"></div>
+          </div>
+          <div class="card clues-card">
+            <h4>Pistas</h4>
+            <div id="crosswordClues"></div>
+            <div id="crosswordFeedback" class="game-feedback"></div>
+          </div>
+        </div>
+      </div>
+
+      <div id="memory" class="tab-panel">
+        <div class="card game-card">
+          <div class="game-title-row"><div><h3>Memoria: concepto + definición</h3><p>Encuentra las 6 parejas relacionadas con la sesión.</p></div><button id="resetMemory" class="btn secondary small">Reiniciar</button></div>
+          <div id="memoryGrid" class="memory-grid"></div>
+          <div id="memoryFeedback" class="game-feedback"></div>
+        </div>
+      </div>
+
+      <div id="wordsearch" class="tab-panel">
+        <div class="game-layout">
+          <div class="card game-card">
+            <h3>Sopa de letras</h3>
+            <p>Haz clic en la primera y luego en la última letra de una palabra. Hay exactamente <b>10 palabras clave</b>.</p>
+            <div id="wordGrid" class="word-grid"></div>
+          </div>
+          <div class="card clues-card">
+            <h4>Palabras por encontrar</h4>
+            <div id="wordList" class="word-list"></div>
+            <button id="resetWordSearch" class="btn secondary small">Nueva sopa</button>
+            <div id="wordFeedback" class="game-feedback"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="quiz" class="section">
+      <div class="section-head">
+        <div><p class="eyebrow">MÓDULO 4</p><h2>Cuestionario final</h2><p>10 preguntas sobre Copilot, storytelling, diseño profesional y uso ético de IA.</p></div>
+        <div class="section-quote">“Demuestra lo que sabes y desbloquea la última etapa.”</div>
+      </div>
+      <form id="quizForm" class="quiz-list"></form>
+      <div class="quiz-actions">
+        <button id="submitQuiz" class="btn primary" type="button">Calificar cuestionario</button>
+        <button id="resetQuiz" class="btn secondary" type="button">Reiniciar</button>
+      </div>
+      <div id="quizResult" class="quiz-result"></div>
+    </section>
+
+    <section id="diploma" class="section">
+      <div class="section-head">
+        <div><p class="eyebrow">META FINAL</p><h2>Diploma de finalización</h2><p>Se desbloquea cuando completas teoría, tips, los tres juegos y el cuestionario.</p></div>
+      </div>
+      <div class="diploma-lock card" id="diplomaLock">
+        <div class="lock-icon">🔒</div><h3>Diploma bloqueado</h3>
+        <p id="diplomaMissing">Aún tienes actividades pendientes.</p>
+        <button class="btn secondary" data-go="inicio">Ver mi progreso</button>
+      </div>
+      <div id="diplomaArea" class="diploma-area hidden">
+        <div id="diplomaPreview" class="diploma">
+          <div class="diploma-top">
+            <img src="assets/sise-logo.png" alt="SISE" />
+            <span>POWERPOINT IA LAB</span>
+          </div>
+          <p class="diploma-kicker">DIPLOMA DE FINALIZACIÓN</p>
+          <h2>Reconocimiento de aprendizaje</h2>
+          <p>Se otorga el presente diploma a</p>
+          <h3 id="diplomaName">Estudiante</h3>
+          <p id="diplomaEmail">correo@ejemplo.com</p>
+          <p>por completar satisfactoriamente la experiencia educativa</p>
+          <h4>“Microsoft PowerPoint con IA (Copilot)”</h4>
+          <p>Storytelling · Diseño profesional · Uso ético y responsable de IA</p>
+          <div class="diploma-footer"><span id="diplomaDate">Fecha</span><span>SISE · Taller de Informática para la Empleabilidad</span></div>
+        </div>
+        <div class="diploma-actions">
+          <button id="downloadDiploma" class="btn primary">⬇ Descargar diploma en PDF</button>
+          <button id="printDiploma" class="btn secondary">🖨 Imprimir</button>
+        </div>
+        <p class="celebrate">🎉 ¡Excelente! Cerraste la ruta completa. Ahora lleva estos criterios a tu próxima presentación.</p>
+      </div>
+    </section>
+  </main>
+
+  <div id="photoLightbox" class="photo-lightbox" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Visor de imágenes">
+    <button type="button" id="lightboxClose" class="lightbox-close" aria-label="Cerrar visor">×</button>
+    <button type="button" id="lightboxPrev" class="lightbox-nav lightbox-prev" aria-label="Imagen anterior">‹</button>
+    <figure>
+      <img id="lightboxImg" src="" alt="" />
+      <figcaption><span id="lightboxCount"></span><strong id="lightboxCaption"></strong></figcaption>
+    </figure>
+    <button type="button" id="lightboxNext" class="lightbox-nav lightbox-next" aria-label="Imagen siguiente">›</button>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
