@@ -1,1 +1,402 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0078D4">
+<meta name="description" content="Clase virtual SISE: Colaboración digital para la empleabilidad con OneDrive, Teams y Canva.">
+<title>SISE | Clase Virtual - Colaboración Digital para la Empleabilidad</title>
+<style>
+:root{
+  --onedrive:#0078d4; --onedrive2:#28a8ea; --onedrive3:#50e6ff;
+  --canva:#00c4cc; --canva2:#7d2ae8; --canva3:#5b2cff;
+  --ink:#12213a; --muted:#617087; --bg:#f4f8fc; --card:#fff; --line:#d9e5f0;
+  --good:#16865c; --warn:#e58a00; --bad:#c83349; --pink:#ff0f57;
+  --shadow:0 18px 46px rgba(22,55,88,.12); --radius:22px;
+  --zoom:1;
+}
+*{box-sizing:border-box} html{scroll-behavior:smooth} body{margin:0;font-family:Inter,Segoe UI,Arial,sans-serif;color:var(--ink);background:var(--bg);overflow-x:hidden}
+button,input{font:inherit} button{cursor:pointer} img{max-width:100%} .hidden{display:none!important}
+.icon{width:42px;height:42px;border-radius:13px;display:inline-grid;place-items:center;color:#fff;flex:0 0 42px;box-shadow:0 8px 18px rgba(20,45,72,.16)}
+.icon svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.badge{display:inline-flex;align-items:center;gap:7px;padding:7px 11px;border-radius:999px;background:#eaf6ff;color:#076cb8;font-weight:800;font-size:12px}
+.logoImg{display:block;object-fit:contain}.muted{color:var(--muted)}.eyebrow{font-weight:900;text-transform:uppercase;letter-spacing:.12em;font-size:11px;color:var(--onedrive)}
 
+/* Welcome */
+#welcome{min-height:100vh;display:grid;grid-template-columns:minmax(0,1.35fr) minmax(390px,.65fr);background:#071d36;position:relative;overflow:hidden}
+.welcomeVisual{position:relative;min-height:100vh;background:#0a2b4e center/cover no-repeat;transition:background-image .8s ease}
+.welcomeVisual:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(4,22,40,.30),rgba(4,22,40,.18) 55%,rgba(4,22,40,.58));pointer-events:none}
+.welcomeBrand{position:absolute;z-index:3;left:44px;top:34px;display:flex;gap:12px;align-items:center}.welcomeBrand img{height:58px;width:auto;border-radius:13px;box-shadow:0 14px 30px rgba(0,0,0,.18)}
+.welcomeCopy{position:absolute;z-index:3;left:clamp(28px,5vw,76px);bottom:clamp(44px,9vh,96px);max-width:760px;color:#fff}
+.welcomeCopy h1{margin:8px 0 18px;font-size:clamp(42px,6vw,76px);line-height:.98;letter-spacing:-.04em}.welcomeCopy p{font-size:18px;line-height:1.55;max-width:680px;color:#edf7ff}
+.welcomeTags{display:flex;flex-wrap:wrap;gap:9px;margin-top:20px}.welcomeTags span{padding:8px 11px;border:1px solid rgba(255,255,255,.25);background:rgba(255,255,255,.12);backdrop-filter:blur(9px);border-radius:999px;font-size:13px;font-weight:700}
+.welcomeDots{display:flex;gap:7px;margin-top:22px}.welcomeDots i{width:28px;height:4px;border-radius:999px;background:rgba(255,255,255,.35);transition:.25s}.welcomeDots i.active{width:58px;background:#fff}
+.loginSide{min-height:100vh;padding:32px;display:grid;place-items:center;background:linear-gradient(160deg,#f8fcff,#edf8ff 45%,#f5f1ff)}
+.loginCard{width:min(460px,100%);background:rgba(255,255,255,.94);border:1px solid #dbe9f4;border-radius:28px;padding:34px;box-shadow:0 24px 70px rgba(15,53,85,.18)}
+.loginHead{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:24px}.loginHead img{height:54px;width:88px;object-fit:cover;border-radius:11px}.loginCard h2{font-size:30px;margin:0 0 8px}.loginCard>p{margin:0 0 21px;color:var(--muted);line-height:1.5}
+.field{margin:12px 0}.field label{display:block;margin-bottom:7px;font-size:13px;font-weight:800}.field input{width:100%;border:1px solid #cbd9e7;border-radius:13px;padding:13px 14px;background:#fbfdff;outline:0;transition:.2s}.field input:focus{border-color:var(--onedrive);box-shadow:0 0 0 4px rgba(0,120,212,.1)}
+.primary{border:0;border-radius:13px;padding:13px 17px;font-weight:900;color:#fff;background:linear-gradient(135deg,var(--onedrive),var(--canva2));box-shadow:0 10px 24px rgba(0,120,212,.23)}.primary:hover{filter:brightness(1.04)}.full{width:100%}
+.formMsg{min-height:22px;margin-top:10px;font-size:13px;font-weight:800}.formMsg.bad{color:var(--bad)}.formMsg.good{color:var(--good)}.micro{font-size:11px;color:#718096;line-height:1.45;margin-top:12px}
+
+/* Application */
+#app{min-height:100vh}.sidebar{position:fixed;z-index:60;inset:0 auto 0 0;width:276px;background:linear-gradient(180deg,#072443,#0a3158 60%,#10254b);color:#fff;padding:17px 13px;overflow:auto;transition:.25s}.sideBrand{display:flex;align-items:center;gap:10px;padding:4px 6px 16px;border-bottom:1px solid rgba(255,255,255,.10);margin-bottom:9px}.sideBrand img{width:56px;height:56px;border-radius:12px;object-fit:cover}.sideBrand strong{display:block;font-size:15px}.sideBrand span{font-size:11px;color:#b9d6ee;line-height:1.35}
+.navGroupLabel{font-size:10px;color:#8eb8d8;font-weight:900;text-transform:uppercase;letter-spacing:.13em;margin:17px 9px 6px}.navBtn{width:100%;border:0;color:#d9ebfa;background:transparent;display:flex;align-items:center;gap:11px;padding:9px 10px;border-radius:13px;text-align:left;margin:3px 0;font-weight:750;transition:.18s}.navBtn:hover{background:rgba(255,255,255,.08)}.navBtn.active{background:linear-gradient(90deg,rgba(0,196,204,.18),rgba(125,42,232,.18));color:#fff;box-shadow:inset 3px 0 var(--canva)}.navBtn .icon{width:34px;height:34px;border-radius:10px;flex-basis:34px}.navBtn .icon svg{width:18px;height:18px}
+.sideTools{margin-top:18px;padding:13px;border:1px solid rgba(255,255,255,.11);background:rgba(255,255,255,.05);border-radius:16px}.sideTools h4{margin:0 0 10px;font-size:12px}.zoomRow{display:grid;grid-template-columns:1fr 1.35fr 1fr;gap:6px}.zoomBtn,.zoomValue,.screenBtn{border:1px solid rgba(255,255,255,.13);background:rgba(255,255,255,.08);color:#fff;border-radius:10px;padding:8px;font-weight:900;text-align:center}.zoomBtn:hover,.screenBtn:hover{background:rgba(255,255,255,.15)}.screenBtn{width:100%;margin-top:7px;font-size:12px}
+.topbar{position:fixed;z-index:50;top:0;left:276px;right:0;height:76px;background:rgba(255,255,255,.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--line);display:flex;align-items:center;gap:15px;padding:0 22px}.hamb{display:none;border:0;background:#092a4a;color:#fff;width:42px;height:42px;border-radius:12px;font-size:20px}.topTitle{min-width:0;flex:1}.topTitle strong{display:block;font-size:15px}.topTitle span{display:block;font-size:11px;color:var(--muted);margin-top:3px}.progressTop{display:flex;align-items:center;gap:10px;width:min(340px,28vw)}.bar{height:9px;background:#e4eef7;border-radius:999px;overflow:hidden;flex:1}.bar i{display:block;width:0;height:100%;background:linear-gradient(90deg,var(--onedrive2),var(--canva));transition:.35s}.userChip{display:flex;align-items:center;gap:9px;padding:7px 10px;border:1px solid #dbe5ef;background:#f8fbfd;border-radius:999px;max-width:220px}.avatar{width:31px;height:31px;border-radius:50%;display:grid;place-items:center;color:#fff;background:linear-gradient(135deg,var(--onedrive),var(--canva2));font-weight:900}.userChip span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:12px;font-weight:800}.logout{border:0;background:#fff1f4;color:#b5203c;border-radius:12px;padding:10px 12px;font-weight:900}.logout:hover{background:#ffe4ea}
+.main{margin-left:276px;padding-top:76px;min-height:100vh;transform-origin:top left}.page{display:none;padding:24px;max-width:1500px;margin:0 auto;animation:pageIn .27s ease}.page.active{display:block}@keyframes pageIn{from{opacity:.2;transform:translateY(5px)}to{opacity:1;transform:none}}
+.pageHero{display:grid;grid-template-columns:minmax(0,1fr) minmax(380px,.82fr);gap:24px;align-items:stretch;background:linear-gradient(135deg,#fff,#f3fbff);border:1px solid var(--line);border-radius:28px;padding:24px;box-shadow:var(--shadow);overflow:hidden}.pageHero h1{font-size:clamp(31px,4vw,50px);line-height:1.04;letter-spacing:-.03em;margin:8px 0 13px}.pageHero p{font-size:16px;line-height:1.62;color:#50627a}.heroImage{min-height:320px;border-radius:20px;overflow:hidden;position:relative;background:#0b2f54}.heroImage img{width:100%;height:100%;object-fit:cover;display:block;cursor:zoom-in;transition:.35s}.heroImage:hover img{transform:scale(1.025)}.heroImage:after{content:"";position:absolute;inset:auto 0 0;height:30%;background:linear-gradient(transparent,rgba(4,20,36,.40));pointer-events:none}.imageLabel{position:absolute;z-index:2;left:14px;bottom:14px;color:#fff;background:rgba(4,25,45,.72);backdrop-filter:blur(8px);padding:8px 11px;border-radius:11px;font-size:12px;font-weight:800}
+.gradientTitle{background:linear-gradient(90deg,var(--onedrive),var(--canva2));-webkit-background-clip:text;background-clip:text;color:transparent}.sectionHead{display:flex;align-items:flex-end;justify-content:space-between;gap:18px;margin:28px 2px 13px}.sectionHead h2{margin:0;font-size:27px}.sectionHead p{margin:0;color:var(--muted);font-size:13px}.grid2{display:grid;grid-template-columns:repeat(2,1fr);gap:15px}.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:13px}.card{background:#fff;border:1px solid var(--line);border-radius:19px;padding:18px;box-shadow:0 8px 22px rgba(24,62,96,.06)}.card h3{margin:0 0 8px;font-size:18px}.card p,.card li{color:#55667d;line-height:1.58}.card ul{padding-left:19px;margin-bottom:0}.feature{display:flex;gap:13px;align-items:flex-start}.feature .icon{width:40px;height:40px;border-radius:12px;flex-basis:40px}.feature h3{font-size:16px;margin:2px 0 4px}.feature p{margin:0;font-size:13px}.softBlue{background:#edf8ff}.softPurple{background:#f5f0ff}.softTeal{background:#edfcfc}.softPink{background:#fff1f6}.quote{margin-top:15px;padding:14px 16px;border-left:4px solid var(--canva);background:#effcfc;border-radius:0 14px 14px 0;font-weight:800;color:#17455a}
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.step{position:relative;padding:19px;background:#fff;border:1px solid var(--line);border-radius:18px}.stepNo{width:34px;height:34px;border-radius:11px;display:grid;place-items:center;color:#fff;background:linear-gradient(135deg,var(--onedrive),var(--canva2));font-weight:900;margin-bottom:10px}.step h3{margin:0 0 6px;font-size:15px}.step p{margin:0;color:var(--muted);font-size:13px;line-height:1.5}
+.checklist{display:grid;gap:8px}.check{display:flex;gap:10px;align-items:flex-start;padding:10px 11px;border:1px solid #e0eaf3;border-radius:12px;background:#fbfdff}.check b{color:var(--good)}.check span{font-size:13px;color:#53647b;line-height:1.45}
+.completeBox{margin-top:17px;padding:14px 16px;border:1px dashed #9fb9d2;border-radius:15px;background:#f9fcff;display:flex;align-items:center;justify-content:space-between;gap:13px}.completeBox.done{border-style:solid;border-color:#8dd4b3;background:#f1fbf6}.completeBtn{border:0;border-radius:11px;padding:10px 13px;color:#fff;background:linear-gradient(135deg,#148a5c,#1eb980);font-weight:900;white-space:nowrap}
+.tableWrap{overflow:auto;border:1px solid var(--line);border-radius:18px;background:#fff}.rubric{width:100%;border-collapse:collapse;min-width:900px}.rubric th,.rubric td{padding:12px;border-bottom:1px solid #e3ebf3;border-right:1px solid #edf2f7;vertical-align:top;text-align:left;font-size:13px;line-height:1.45}.rubric th{background:#eef8ff;color:#0b5e9a}.rubric th:first-child{background:#0b609e;color:#fff}.rubric tr:last-child td{border-bottom:0}
+.videoGrid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}.videoCard{background:#fff;border:1px solid var(--line);border-radius:18px;padding:13px}.videoFrame{aspect-ratio:16/9;border-radius:13px;overflow:hidden;background:#071d36}.videoFrame iframe{width:100%;height:100%;border:0}.videoCard h3{font-size:16px;margin:11px 0 4px}.videoCard p{font-size:13px;color:var(--muted);margin:0;line-height:1.45}
+
+/* Games */
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin:16px 0}.tab{border:1px solid #cbd9e7;background:#fff;border-radius:11px;padding:9px 12px;font-weight:850;color:#31506c}.tab.active{border-color:transparent;color:#fff;background:linear-gradient(135deg,var(--onedrive),var(--canva2))}.gamePane{display:none}.gamePane.active{display:block}.crossWrap{display:grid;grid-template-columns:auto 1fr;gap:22px;align-items:start}.crossGrid{display:grid;grid-template-columns:repeat(9,35px);grid-template-rows:repeat(9,35px);gap:2px;background:#0a2f53;padding:5px;border-radius:11px;width:max-content}.cell{width:35px;height:35px;border:0;text-align:center;text-transform:uppercase;font-weight:900;border-radius:3px;background:#fff;outline:0}.block{width:35px;height:35px;background:#0a2f53}.cell:focus{box-shadow:inset 0 0 0 2px var(--canva)}.clues li{margin-bottom:7px;color:#53647b;line-height:1.45}.memoryGrid{display:grid;grid-template-columns:repeat(4,minmax(100px,1fr));gap:10px}.memoryCard{min-height:90px;border:0;border-radius:14px;background:linear-gradient(135deg,#0b5f9b,#6a36db);color:#fff;font-weight:900;box-shadow:0 8px 18px rgba(26,66,103,.12)}.memoryCard.flipped,.memoryCard.matched{background:#fff;color:#15314d;border:2px solid #8db7d8}.memoryCard.matched{border-color:#79cca4;background:#effaf5}.wordBank{display:flex;flex-wrap:wrap;gap:7px;margin:12px 0}.word{padding:6px 9px;border-radius:999px;background:#eaf4fd;color:#195f95;font-size:12px;font-weight:900}.word.done{text-decoration:line-through;background:#d8f4e5;color:#14754d}.wordGrid{display:grid;grid-template-columns:repeat(16,29px);gap:2px;width:max-content;max-width:100%;overflow:auto;background:#d7e6f3;padding:6px;border-radius:11px}.letter{width:29px;height:29px;border:0;background:#fff;border-radius:4px;font-weight:850;color:#15314d}.letter.sel{background:#e6d9ff}.letter.found{background:#c8f0dd}.gameMsg{min-height:22px;margin-top:10px;font-weight:850;font-size:13px}.gameMsg.good{color:var(--good)}.gameMsg.bad{color:var(--bad)}
+.quizQ{background:#fff;border:1px solid var(--line);border-radius:17px;padding:17px;margin:12px 0}.quizQ h3{font-size:16px;margin:0 0 10px}.answers{display:grid;gap:8px}.answer{border:1px solid #cbd8e5;background:#fff;border-radius:11px;padding:10px 12px;text-align:left;color:#314b65}.answer:hover{border-color:var(--onedrive)}.answer.correct{border-color:#6ec99c;background:#effaf5;color:#126e49}.answer.wrong{border-color:#e48c9b;background:#fff1f4;color:#a7243a}.feedback{font-size:13px;font-weight:800;margin-top:8px}
+
+/* Diploma */
+.statusGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin:15px 0}.status{padding:11px;border-radius:12px;background:#fff;border:1px solid #dae5ef;font-size:12px;font-weight:850}.status.ok{background:#effaf5;border-color:#84d1ab;color:#14724c}.diploma{background:#fff;border:8px double #0b5e9a;border-radius:14px;padding:34px;text-align:center;min-height:500px;display:grid;place-items:center;box-shadow:var(--shadow);position:relative;overflow:hidden}.diploma:before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 10% 10%,rgba(0,196,204,.09),transparent 24%),radial-gradient(circle at 90% 90%,rgba(125,42,232,.09),transparent 25%);pointer-events:none}.diploma.locked{opacity:.58;filter:grayscale(.25);pointer-events:none}.diploma h2{font-size:38px;margin:10px}.diplomaName{font-size:36px;font-family:Georgia,serif;color:#0a72b5;font-weight:800;border-bottom:1px solid #bfd3e4;padding:8px 30px;margin:8px auto;display:inline-block}.downloadBtn{margin-top:13px}
+
+/* Lightbox & helpers */
+.lightbox{position:fixed;z-index:150;inset:0;background:rgba(3,15,28,.90);display:none;align-items:center;justify-content:center;padding:22px}.lightbox.open{display:flex}.lightboxCard{max-width:min(1250px,96vw);position:relative}.lightboxCard img{display:block;max-width:100%;max-height:82vh;border-radius:18px;box-shadow:0 24px 70px rgba(0,0,0,.48)}.lightboxClose{position:absolute;right:-12px;top:-12px;width:43px;height:43px;border-radius:50%;border:0;background:#fff;color:#14324f;font-size:25px;font-weight:900}.toast{position:fixed;z-index:170;right:20px;bottom:20px;background:#0a2c4c;color:#fff;padding:12px 15px;border-radius:12px;box-shadow:var(--shadow);transform:translateY(150%);transition:.25s;max-width:340px;font-weight:750;font-size:13px}.toast.show{transform:none}.confetti{position:fixed;z-index:180;inset:0;pointer-events:none;overflow:hidden}.confetti i{position:absolute;top:-20px;width:8px;height:14px;animation:fall 1.7s linear forwards}@keyframes fall{to{transform:translateY(110vh) rotate(620deg)}}
+
+@media(max-width:1150px){.grid4{grid-template-columns:repeat(2,1fr)}.pageHero{grid-template-columns:1fr}.heroImage{min-height:360px}.steps{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:900px){#welcome{grid-template-columns:1fr}.welcomeVisual{min-height:58vh}.loginSide{min-height:auto;padding:24px}.sidebar{transform:translateX(-100%)}.sidebar.open{transform:none}.topbar{left:0}.hamb{display:inline-grid;place-items:center}.main{margin-left:0}.progressTop{width:150px}.userChip span{display:none}.page{padding:15px}.grid3{grid-template-columns:1fr 1fr}.videoGrid{grid-template-columns:1fr}.crossWrap{grid-template-columns:1fr}.memoryGrid{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:620px){.welcomeVisual{min-height:64vh}.welcomeBrand{left:20px;top:20px}.welcomeBrand img{height:45px}.welcomeCopy{left:22px;right:22px;bottom:28px}.welcomeCopy h1{font-size:42px}.loginSide{padding:15px}.loginCard{padding:24px}.topTitle span,.progressTop{display:none}.logout{padding:9px 10px;font-size:12px}.grid2,.grid3,.grid4,.steps,.statusGrid{grid-template-columns:1fr}.pageHero{padding:17px}.heroImage{min-height:240px}.completeBox{align-items:stretch;flex-direction:column}.completeBtn{width:100%}.memoryGrid{grid-template-columns:repeat(2,1fr)}.wordGrid{transform-origin:left top;max-width:calc(100vw - 54px)}.diploma{padding:22px}.diploma h2{font-size:28px}.diplomaName{font-size:28px}.pageHero h1{font-size:36px}}
+
+/* ===== RIGHT CLASSROOM TOOLBAR ===== */
+:root{--rightbar:286px}
+.topbar{right:var(--rightbar)}
+.main{margin-right:var(--rightbar)}
+.rightbar{position:fixed;z-index:55;top:76px;right:0;bottom:0;width:var(--rightbar);background:linear-gradient(180deg,#f8fcff,#f7f8ff);border-left:1px solid #dbe7f1;padding:14px;overflow:auto;box-shadow:-10px 0 30px rgba(25,63,94,.06);transition:.26s}
+.rightbarHead{padding:15px;background:linear-gradient(135deg,#07345d,#0a70b5 52%,#6332c9);border-radius:20px;color:#fff;box-shadow:0 12px 25px rgba(24,72,111,.18);margin-bottom:12px}.rightbarHead h3{margin:7px 0 5px;font-size:18px}.rightbarHead p{margin:0;color:#dceefe;font-size:12px;line-height:1.45}.rightbarBadge{display:inline-block;padding:4px 8px;border-radius:999px;background:rgba(255,255,255,.14);font-size:9px;font-weight:900;letter-spacing:.12em}
+.toolCard{background:#fff;border:1px solid #dce7f1;border-radius:18px;padding:13px;margin:11px 0;box-shadow:0 7px 18px rgba(26,66,100,.055)}.toolCardTitle{display:flex;align-items:center;gap:10px;margin-bottom:11px}.toolCardTitle b{display:block;font-size:13px;color:#173a59}.toolCardTitle small{display:block;color:#7890a6;font-size:10px;margin-top:2px}.toolBubble{width:37px;height:37px;border-radius:12px;color:#fff;display:grid;place-items:center;box-shadow:0 7px 15px rgba(24,70,108,.15)}
+.rightbar .zoomRow{display:grid;grid-template-columns:1fr 1.3fr 1fr;gap:6px}.rightbar .zoomBtn,.rightbar .zoomValue{border:1px solid #d1deea;background:#f7fbff;color:#145680;border-radius:10px;padding:8px;font-weight:900;text-align:center}.rightbar .zoomBtn:hover{background:#e8f5ff;border-color:#91c7eb}.toolActions{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:7px}.toolMiniBtn,.toolWideBtn{border:1px solid #d3e0eb;background:#fff;color:#245675;border-radius:10px;padding:8px 7px;font-size:10px;font-weight:900}.toolMiniBtn:hover,.toolWideBtn:hover{background:#edf8ff}.toolWideBtn{width:100%;margin-top:9px;color:#057d88;border-color:#b9e6e8}.toolWideBtn.purple{color:#6634c6;border-color:#d6c8f4}.rightTip{margin:4px 0 0;padding:11px;border-radius:12px;background:#effcfc;color:#24536a;font-size:12px;line-height:1.5;border-left:3px solid #00c4cc}.phraseCard blockquote{margin:4px 0 0;padding:11px;border-radius:12px;background:#f6f1ff;color:#4d3675;font-size:12px;line-height:1.55;font-weight:800;border-left:3px solid #7d2ae8}
+.rightProgressCard{margin:12px 0 6px;padding:12px 13px;background:#0b2f53;color:#fff;border-radius:15px}.rightProgressCard span{font-size:10px;color:#bed7ea}.rightProgressCard b{float:right;font-size:13px}.rightProgressBar{clear:both;height:7px;margin-top:9px;border-radius:999px;background:rgba(255,255,255,.13);overflow:hidden}.rightProgressBar i{display:block;height:100%;width:0;background:linear-gradient(90deg,#00c4cc,#7d2ae8);transition:.35s}
+.toolsToggle{display:none;border:0;background:linear-gradient(135deg,#00a4ef,#7d2ae8);color:#fff;width:42px;height:42px;border-radius:12px;font-size:18px}
+/* ===== ENHANCED DIPLOMA ===== */
+.diploma{border:0;padding:18px;background:linear-gradient(135deg,#eaf8ff,#fff 45%,#f6efff);min-height:620px}.diploma:before{background:radial-gradient(circle at 5% 12%,rgba(0,120,212,.12),transparent 28%),radial-gradient(circle at 95% 88%,rgba(125,42,232,.12),transparent 28%)}.diplomaInner{position:relative;z-index:1;width:min(1060px,100%);background:rgba(255,255,255,.96);border:1px solid #cfe0ed;border-radius:24px;padding:30px 38px 24px;box-shadow:0 18px 45px rgba(20,63,96,.10)}.diplomaTopline{height:7px;border-radius:999px;background:linear-gradient(90deg,#0078d4,#00c4cc,#7d2ae8);margin-bottom:20px}.diplomaLogos{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:18px;margin:0 auto 17px}.diplomaLogoBox{height:82px;display:flex;align-items:center;justify-content:center}.diplomaLogoBox:first-child{justify-content:flex-start}.diplomaLogoBox:last-child{justify-content:flex-end}.diplomaLogoBox img{max-width:170px;max-height:76px;object-fit:contain;border-radius:10px}.diplomaSeal{width:58px;height:58px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,#0078d4,#7d2ae8);color:#fff;font-size:25px;box-shadow:0 10px 22px rgba(60,73,180,.23);border:5px solid #eef5ff}.diplomaEyebrow{font-size:11px;font-weight:950;letter-spacing:.15em;color:#2c6c99}.diploma h2{font-size:38px;line-height:1.1;color:#143550;margin:9px 0 12px}.diplomaIntro{margin:0;color:#72869a}.diplomaName{font-size:39px;background:linear-gradient(90deg,#0078d4,#7d2ae8);-webkit-background-clip:text;background-clip:text;color:transparent;border-bottom:1px solid #bcd4e5;margin:5px auto 13px}.diplomaText{max-width:850px;margin:0 auto 18px;color:#53687b;line-height:1.6}.diplomaMetaGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:18px auto 14px;max-width:900px}.diplomaMetaGrid div{padding:11px;background:#f7fbfe;border:1px solid #dfebf3;border-radius:12px}.diplomaMetaGrid span{display:block;font-size:9px;color:#8397a8;text-transform:uppercase;letter-spacing:.09em;font-weight:900}.diplomaMetaGrid b{display:block;margin-top:4px;color:#254861;font-size:12px}.diplomaFooter{display:flex;justify-content:space-between;gap:15px;border-top:1px solid #e0e9f0;padding-top:12px;margin-top:15px;color:#60798d;font-size:10px;font-weight:850}.downloadBtn{margin-top:15px}
+@media(max-width:1180px){.topbar{right:0}.main{margin-right:0}.rightbar{transform:translateX(102%);box-shadow:-18px 0 40px rgba(5,33,57,.15)}.rightbar.open{transform:none}.toolsToggle{display:inline-grid;place-items:center}}
+@media(max-width:900px){.rightbar{top:76px}.toolsToggle{display:inline-grid;place-items:center}.topbar{right:0}}
+@media(max-width:620px){.rightbar{width:min(88vw,310px)}.diplomaInner{padding:22px 16px}.diplomaLogos{grid-template-columns:1fr 50px 1fr;gap:8px}.diplomaLogoBox img{max-width:110px;max-height:56px}.diplomaSeal{width:48px;height:48px;font-size:19px}.diplomaMetaGrid{grid-template-columns:1fr}.diplomaFooter{flex-direction:column;align-items:center}.diploma h2{font-size:28px}.diplomaName{font-size:28px}}
+
+</style>
+</head>
+<body>
+
+<!-- PROFESSIONAL WELCOME -->
+<section id="welcome">
+  <div class="welcomeVisual" id="welcomeVisual">
+    <div class="welcomeBrand"><img src="assets/images/logo_sise.webp" alt="SISE"><img src="assets/images/logo_cpe.webp" alt="CPE"></div>
+    <div class="welcomeCopy">
+      <div class="badge" style="background:rgba(255,255,255,.14);color:#fff;border:1px solid rgba(255,255,255,.22)">CLASE VIRTUAL · SESIÓN 5</div>
+      <h1>Colaboración digital <span style="color:#55e6ef">para la empleabilidad</span></h1>
+      <p>Una experiencia práctica para organizar, compartir, coeditar y presentar evidencias profesionales usando OneDrive, Teams y Canva.</p>
+      <div class="welcomeTags"><span>☁ OneDrive</span><span>👥 Teams</span><span>🎨 Canva</span><span>✨ IA responsable</span><span>🏅 Diploma</span></div>
+      <div class="welcomeDots" id="welcomeDots"></div>
+    </div>
+  </div>
+  <div class="loginSide">
+    <form class="loginCard" id="loginForm">
+      <div class="loginHead"><div><div class="eyebrow">Acceso de estudiante</div><h2>Ingresa a tu clase</h2></div><img src="assets/images/logo_sise.webp" alt="SISE"></div>
+      <p>Registra tus datos para guardar el progreso de esta sesión y generar tu diploma personalizado.</p>
+      <div class="field"><label for="name">Nombre completo</label><input id="name" autocomplete="name" placeholder="Ej. Ana Torres Mendoza" required></div>
+      <div class="field"><label for="email">Correo electrónico</label><input id="email" type="email" autocomplete="email" placeholder="nombre@correo.com" required></div>
+      <div class="field"><label for="access">Clave de acceso</label><input id="access" type="password" placeholder="••••••••" required></div>
+      <button class="primary full" type="submit">Ingresar a la clase virtual →</button>
+      <div id="loginMsg" class="formMsg"></div>
+      <div class="micro">La clave se valida mediante SHA-256 en el navegador. El progreso se guarda localmente por correo del estudiante.</div>
+    </form>
+  </div>
+</section>
+
+<!-- APP -->
+<div id="app" class="hidden">
+  <aside class="sidebar" id="sidebar">
+    <div class="sideBrand"><img src="assets/images/logo_sise.webp" alt="SISE"><div><strong>Taller de Informática</strong><span>Empleabilidad · Sesión 5<br>OneDrive + Teams + Canva</span></div></div>
+    <div class="navGroupLabel">Ruta de aprendizaje</div>
+    <button class="navBtn active" data-page="inicio"><span class="icon" style="background:#0078d4"><svg viewBox="0 0 24 24"><path d="M3 11 12 3l9 8"/><path d="M5 10v10h14V10"/></svg></span>Inicio</button>
+    <button class="navBtn" data-page="onedrive"><span class="icon" style="background:#1597e5"><svg viewBox="0 0 24 24"><path d="M7 18h11a4 4 0 0 0 .6-7.95A6 6 0 0 0 7.4 8.3 4.7 4.7 0 0 0 7 18Z"/></svg></span>OneDrive</button>
+    <button class="navBtn" data-page="teams"><span class="icon" style="background:#5b5fc7"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"/><path d="M3 20v-2a5 5 0 0 1 10 0v2"/><circle cx="17" cy="7" r="2"/><path d="M15 13a4 4 0 0 1 6 3v2"/></svg></span>Teams y coautoría</button>
+    <button class="navBtn" data-page="canva"><span class="icon" style="background:linear-gradient(135deg,#00c4cc,#7d2ae8)"><svg viewBox="0 0 24 24"><path d="M4 20 20 4"/><path d="m14 4 6 6"/><path d="m4 14 6 6"/><path d="M5 5h4v4H5z"/></svg></span>Canva y diseño</button>
+    <button class="navBtn" data-page="actividad"><span class="icon" style="background:#11a67f"><svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></span>Actividad guiada</button>
+    <button class="navBtn" data-page="recursos"><span class="icon" style="background:#f05b48"><svg viewBox="0 0 24 24"><path d="m10 8 6 4-6 4Z"/><rect x="3" y="5" width="18" height="14" rx="2"/></svg></span>Recursos y videos</button>
+    <div class="navGroupLabel">Práctica y logro</div>
+    <button class="navBtn" data-page="juegos"><span class="icon" style="background:#f0a51a"><svg viewBox="0 0 24 24"><path d="M6 11h4M8 9v4"/><circle cx="16" cy="10" r="1"/><circle cx="18" cy="13" r="1"/><path d="M7 6h10a5 5 0 0 1 4.7 6.7l-1 3A3 3 0 0 1 16 17l-2-2h-4l-2 2a3 3 0 0 1-4.7-1.3l-1-3A5 5 0 0 1 7 6Z"/></svg></span>Juegos</button>
+    <button class="navBtn" data-page="evaluacion"><span class="icon" style="background:#7d2ae8"><svg viewBox="0 0 24 24"><path d="M9 11h6M9 15h6"/><path d="M7 3h10a2 2 0 0 1 2 2v16l-7-3-7 3V5a2 2 0 0 1 2-2Z"/></svg></span>Evaluación</button>
+    <button class="navBtn" data-page="diploma"><span class="icon" style="background:#148a5c"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="5"/><path d="m8.5 12-1 9 4.5-3 4.5 3-1-9"/></svg></span>Diploma</button>
+  </aside>
+
+  <aside class="rightbar" id="rightbar">
+    <div class="rightbarHead">
+      <div class="rightbarBadge">AULA DIGITAL</div>
+      <h3>Herramientas de clase</h3>
+      <p>Personaliza la lectura y recibe apoyo contextual durante toda la sesión.</p>
+    </div>
+
+    <div class="toolCard zoomCard">
+      <div class="toolCardTitle"><span class="toolBubble" style="background:linear-gradient(135deg,#0078d4,#00a4ef)">🔎</span><div><b>Zoom</b><small>Ajusta el contenido</small></div></div>
+      <div class="zoomRow"><button class="zoomBtn" id="zoomOut" type="button">A−</button><div class="zoomValue" id="zoomValue">100%</div><button class="zoomBtn" id="zoomIn" type="button">A+</button></div>
+      <div class="toolActions"><button class="toolMiniBtn" id="zoomReset" type="button">↺ Restablecer</button><button class="toolMiniBtn" id="fullScreen" type="button">⛶ Pantalla completa</button></div>
+    </div>
+
+    <div class="toolCard tipCard">
+      <div class="toolCardTitle"><span class="toolBubble" style="background:linear-gradient(135deg,#00c4cc,#20b8b3)">💡</span><div><b>Tip de la sección</b><small>Aplicación práctica</small></div></div>
+      <p class="rightTip" id="rightTip">Organiza tu trabajo digital antes de empezar a diseñar.</p>
+      <button class="toolWideBtn" id="nextTip" type="button">Otro tip</button>
+    </div>
+
+    <div class="toolCard phraseCard">
+      <div class="toolCardTitle"><span class="toolBubble" style="background:linear-gradient(135deg,#7d2ae8,#5b5fc7)">✨</span><div><b>Frase motivadora</b><small>Impulsa tu progreso</small></div></div>
+      <blockquote id="rightPhrase">“Tu organización digital también comunica cómo trabajas.”</blockquote>
+      <button class="toolWideBtn purple" id="nextPhrase" type="button">Nueva frase</button>
+    </div>
+
+    <div class="rightProgressCard">
+      <span>Progreso de la sesión</span><b id="rightProgress">0%</b>
+      <div class="rightProgressBar"><i id="rightProgressBar"></i></div>
+    </div>
+  </aside>
+
+  <header class="topbar">
+    <button class="hamb" id="hamb" aria-label="Abrir menú">☰</button>
+    <button class="toolsToggle" id="toolsToggle" aria-label="Abrir herramientas">✨</button>
+    <div class="topTitle"><strong>Clase Virtual · Colaboración digital para la empleabilidad</strong><span id="crumb">Inicio · Ruta general de la sesión</span></div>
+    <div class="progressTop"><b id="progressPct">0%</b><div class="bar"><i id="progressBar"></i></div></div>
+    <div class="userChip"><div class="avatar" id="avatar">E</div><span id="userName">Estudiante</span></div>
+    <button class="logout" id="logout" type="button">↪ Cerrar sesión</button>
+  </header>
+
+  <main class="main" id="mainContent">
+    <!-- INICIO -->
+    <section class="page active" id="inicio">
+      <div class="pageHero"><div><div class="eyebrow">Bienvenido a tu experiencia virtual</div><h1>Aprende a <span class="gradientTitle">colaborar, organizar y comunicar</span> como en un entorno profesional.</h1><p>Esta sesión integra herramientas de nube, coautoría y diseño visual para que el trabajo en equipo sea ordenado, verificable y orientado a la empleabilidad.</p><div class="quote">“Tu organización digital también comunica cómo trabajas.”</div></div><div class="heroImage"><img src="assets/images/01_inicio.webp" alt="Estudiantes colaborando digitalmente"><span class="imageLabel">SISE · CPE · Colaboración digital</span></div></div>
+      <div class="sectionHead"><div><div class="eyebrow">Ruta de la clase</div><h2>Qué vas a lograr</h2></div><p>De la nube al portafolio profesional</p></div>
+      <div class="steps"><div class="step"><div class="stepNo">1</div><h3>Organizar</h3><p>Crear una estructura de carpetas clara en OneDrive.</p></div><div class="step"><div class="stepNo">2</div><h3>Colaborar</h3><p>Configurar permisos, enlaces y coautoría con Teams.</p></div><div class="step"><div class="stepNo">3</div><h3>Diseñar</h3><p>Preparar un storyboard profesional en Canva.</p></div><div class="step"><div class="stepNo">4</div><h3>Demostrar</h3><p>Presentar competencias, logros y experiencias con fuentes registradas.</p></div></div>
+      <div class="sectionHead"><h2>Competencias de la sesión</h2><p>Aplicación profesional y ética</p></div>
+      <div class="grid4">
+        <div class="card feature"><span class="icon" style="background:#0078d4">☁</span><div><h3>Nube</h3><p>Almacenar y estructurar información con criterio profesional.</p></div></div>
+        <div class="card feature"><span class="icon" style="background:#5b5fc7">👥</span><div><h3>Coautoría</h3><p>Trabajar sobre una fuente común y coordinar cambios.</p></div></div>
+        <div class="card feature"><span class="icon" style="background:#00c4cc">🎨</span><div><h3>Diseño</h3><p>Aplicar jerarquía, contraste, coherencia y legibilidad.</p></div></div>
+        <div class="card feature"><span class="icon" style="background:#7d2ae8">✨</span><div><h3>IA responsable</h3><p>Usar asistencia digital, verificar resultados y declarar aportes.</p></div></div>
+      </div>
+    </section>
+
+    <!-- ONEDRIVE -->
+    <section class="page" id="onedrive">
+      <div class="pageHero"><div><div class="eyebrow">Módulo 1 · OneDrive</div><h1>Organización profesional <span class="gradientTitle">en la nube</span></h1><p>OneDrive permite centralizar archivos, ordenar evidencias y compartir un espacio común. La calidad del trabajo colaborativo empieza por una estructura que todos puedan comprender.</p><div class="quote">Regla práctica: una carpeta debe indicar qué contiene sin necesidad de abrirla.</div></div><div class="heroImage"><img src="assets/images/02_onedrive.webp" alt="Organización de archivos en OneDrive"><span class="imageLabel">OneDrive · carpetas · archivos · nube</span></div></div>
+      <div class="sectionHead"><h2>Estructura recomendada</h2><p>Orden simple y escalable</p></div>
+      <div class="grid3"><div class="card softBlue"><h3>📁 01_Brief</h3><p>Consigna, fuentes iniciales, requisitos y acuerdos del equipo.</p></div><div class="card softTeal"><h3>📁 02_Producción</h3><p>Archivos editables, borradores y recursos utilizados.</p></div><div class="card softPurple"><h3>📁 03_Entrega</h3><p>Versión final, evidencias, enlaces y material para presentar.</p></div></div>
+      <div class="sectionHead"><h2>Buenas prácticas</h2><p>Reduce errores y duplicidad</p></div>
+      <div class="grid2"><div class="card"><div class="checklist"><div class="check"><b>✓</b><span>Usa nombres claros: <b>Apellido_Proyecto_V01</b>.</span></div><div class="check"><b>✓</b><span>Evita carpetas llamadas “varios”, “nuevo” o “final final”.</span></div><div class="check"><b>✓</b><span>Separa archivos editables de productos finales.</span></div></div></div><div class="card"><div class="checklist"><div class="check"><b>✓</b><span>Define un responsable de orden por equipo.</span></div><div class="check"><b>✓</b><span>Revisa duplicados antes de crear una copia.</span></div><div class="check"><b>✓</b><span>Guarda fuentes y evidencias dentro del proyecto.</span></div></div></div>
+      <div class="completeBox" id="boxOnedrive"><span><b>Logro del módulo:</b> puedes explicar cómo organizar un espacio colaborativo en la nube.</span><button class="completeBtn" data-complete="onedrive">✓ Completar OneDrive</button></div>
+    </section>
+
+    <!-- TEAMS -->
+    <section class="page" id="teams">
+      <div class="pageHero"><div><div class="eyebrow">Módulo 2 · Teams y coautoría</div><h1>Compartir no es lo mismo que <span class="gradientTitle">dar acceso a todo</span></h1><p>Una colaboración profesional combina comunicación, permisos adecuados, enlaces controlados y trabajo simultáneo sobre una misma fuente.</p><div class="quote">Menos copias, más trazabilidad: el equipo debe saber dónde está la versión vigente.</div></div><div class="heroImage"><img src="assets/images/03_teams.webp" alt="Colaboración mediante Teams"><span class="imageLabel">Teams · coordinación · coautoría</span></div></div>
+      <div class="sectionHead"><h2>Permisos y enlaces</h2><p>Acceso según necesidad</p></div>
+      <div class="grid3"><div class="card feature"><span class="icon" style="background:#267fd0">👁</span><div><h3>Ver</h3><p>Para revisión, lectura o consulta sin alterar el archivo.</p></div></div><div class="card feature"><span class="icon" style="background:#6a42d8">✎</span><div><h3>Editar</h3><p>Para integrantes responsables de aportar directamente.</p></div></div><div class="card feature"><span class="icon" style="background:#0da47b">🔗</span><div><h3>Enlace</h3><p>Debe enviarse con el alcance correcto y a destinatarios definidos.</p></div></div></div>
+      <div class="sectionHead"><h2>Control de versiones</h2><p>Qué resuelve</p></div>
+      <div class="grid2"><div class="card"><h3>🕘 Historial</h3><p>Permite revisar cambios, identificar cuándo se modificó el archivo y recuperar un estado anterior cuando sea necesario.</p></div><div class="card"><h3>🤝 Coautoría</h3><p>Evita trabajar en copias paralelas. Todos colaboran sobre el mismo archivo y reducen conflictos de versiones.</p></div></div>
+      <div class="completeBox" id="boxTeams"><span><b>Logro del módulo:</b> diferencias permisos de ver/editar y explicas para qué sirve el historial de versiones.</span><button class="completeBtn" data-complete="teams">✓ Completar Teams</button></div>
+    </section>
+
+    <!-- CANVA -->
+    <section class="page" id="canva">
+      <div class="pageHero"><div><div class="eyebrow">Módulo 3 · Canva</div><h1>Diseña para que la información <span class="gradientTitle">se entienda rápido</span></h1><p>El storyboard organiza la secuencia antes de diseñar. Luego Canva permite convertir esa estructura en una presentación visual coherente y legible.</p><div class="quote">Diseñar no es decorar: cada elemento debe ayudar a comprender el mensaje.</div></div><div class="heroImage"><img src="assets/images/04_canva.webp" alt="Estudiantes diseñando en Canva"><span class="imageLabel">Canva · storyboard · diseño profesional</span></div></div>
+      <div class="sectionHead"><h2>4 principios visuales</h2><p>Base del criterio de evaluación</p></div>
+      <div class="grid4"><div class="card softBlue"><h3>1. Jerarquía</h3><p>El título, la idea principal y los detalles deben distinguirse por tamaño y posición.</p></div><div class="card softPurple"><h3>2. Contraste</h3><p>Texto y fondo necesitan diferencia suficiente para facilitar la lectura.</p></div><div class="card softTeal"><h3>3. Coherencia</h3><p>Mantén una línea visual: tipografías, colores, márgenes y estilo de imágenes.</p></div><div class="card softPink"><h3>4. Legibilidad</h3><p>Reduce párrafos extensos y prioriza frases breves, datos y evidencias.</p></div></div>
+      <div class="sectionHead"><h2>Storyboard sugerido</h2><p>Secuencia de una presentación profesional</p></div>
+      <div class="steps"><div class="step"><div class="stepNo">1</div><h3>Portada</h3><p>Nombre, carrera y propósito.</p></div><div class="step"><div class="stepNo">2</div><h3>Competencias</h3><p>Habilidades técnicas y transversales.</p></div><div class="step"><div class="stepNo">3</div><h3>Logros</h3><p>Evidencias concretas y resultados.</p></div><div class="step"><div class="stepNo">4</div><h3>Experiencia</h3><p>Proyectos, prácticas y cierre.</p></div></div>
+      <div class="completeBox" id="boxCanva"><span><b>Logro del módulo:</b> puedes justificar decisiones de jerarquía, contraste, coherencia y legibilidad.</span><button class="completeBtn" data-complete="canva">✓ Completar Canva</button></div>
+    </section>
+
+    <!-- ACTIVIDAD -->
+    <section class="page" id="actividad">
+      <div class="pageHero"><div><div class="eyebrow">Práctica guiada · Evidencia</div><h1>Construye un <span class="gradientTitle">espacio colaborativo real</span></h1><p>En equipos de la misma carrera, organicen una carpeta compartida, asignen permisos adecuados y elaboren en Canva el boceto de una presentación sobre competencias, logros y experiencias profesionales.</p><div class="quote">Producto esperado: carpeta organizada + enlace correcto + storyboard profesional + registro de fuentes/IA.</div></div><div class="heroImage"><img src="assets/images/05_permisos.webp" alt="Estudiantes configurando permisos y enlaces"><span class="imageLabel">Actividad · permisos · enlaces · trabajo en equipo</span></div></div>
+      <div class="sectionHead"><h2>Procedimiento paso a paso</h2><p>Trabajo en equipo</p></div>
+      <div class="grid2"><div class="card"><h3>☁ Parte A · OneDrive y Teams</h3><ol><li>Crear la carpeta principal del equipo.</li><li>Construir subcarpetas para brief, producción y entrega.</li><li>Subir o crear los archivos de trabajo.</li><li>Asignar permisos de ver o editar según cada integrante.</li><li>Generar el enlace de trabajo y verificar que funcione.</li><li>Realizar una modificación conjunta y revisar historial de versiones.</li></ol></div><div class="card"><h3>🎨 Parte B · Canva</h3><ol><li>Definir objetivo y audiencia de la presentación.</li><li>Crear un storyboard de 5 a 7 diapositivas.</li><li>Aplicar jerarquía, contraste, coherencia y legibilidad.</li><li>Incluir competencias, logros y experiencias profesionales.</li><li>Registrar las fuentes visuales y textuales.</li><li>Declarar cualquier apoyo de IA empleado.</li></ol></div></div>
+      <div class="sectionHead"><h2>Uso responsable de IA</h2><p>Magic Design y asistencia de texto</p></div>
+      <div class="grid3"><div class="card feature"><span class="icon" style="background:#7d2ae8">✨</span><div><h3>Idear</h3><p>Usa IA para proponer estructura o alternativas visuales.</p></div></div><div class="card feature"><span class="icon" style="background:#00a6a9">✓</span><div><h3>Revisar</h3><p>Verifica el contenido y adapta el resultado a tu contexto real.</p></div></div><div class="card feature"><span class="icon" style="background:#0078d4">⌁</span><div><h3>Declarar</h3><p>Registra el aporte de IA y las fuentes utilizadas en el producto.</p></div></div></div>
+      <div class="completeBox" id="boxActividad"><span><b>Marca esta etapa cuando hayas comprendido el procedimiento y la evidencia esperada.</b></span><button class="completeBtn" data-complete="actividad">✓ Actividad comprendida</button></div>
+    </section>
+
+    <!-- RECURSOS -->
+    <section class="page" id="recursos">
+      <div class="pageHero"><div><div class="eyebrow">Refuerzo audiovisual</div><h1>Observa, replica y <span class="gradientTitle">aplica</span></h1><p>Usa estos recursos como apoyo para practicar procedimientos. No basta con mirar: pausa el video y reproduce los pasos en tu propio espacio de trabajo.</p><div class="quote">Aprendizaje activo: mira un paso, ejecútalo, verifica el resultado y continúa.</div></div><div class="heroImage"><img src="assets/images/06_versiones.webp" alt="Coautoría y control de versiones"><span class="imageLabel">Recursos · revisión · control de versiones</span></div></div>
+      <div class="sectionHead"><h2>Videos de apoyo</h2><p>Requieren conexión a Internet</p></div>
+      <div class="videoGrid"><div class="videoCard"><div class="videoFrame"><iframe loading="lazy" src="https://www.youtube-nocookie.com/embed/vq5QLYI6kXA" title="OneDrive compartir archivos" allowfullscreen></iframe></div><h3>OneDrive: compartir y administrar acceso</h3><p>Observa cómo compartir archivos y revisar permisos de acceso.</p></div><div class="videoCard"><div class="videoFrame"><iframe loading="lazy" src="https://www.youtube-nocookie.com/embed/2ic__8bOhnU" title="Canva Magic Design" allowfullscreen></iframe></div><h3>Canva: apoyo con herramientas de diseño</h3><p>Revisa posibilidades de asistencia visual y adapta el resultado con criterio propio.</p></div></div>
+      <div class="sectionHead"><h2>Antes de continuar</h2><p>Comprobación rápida</p></div>
+      <div class="grid3"><div class="card"><h3>☁ OneDrive</h3><p>¿Puedes explicar la diferencia entre estructura de carpetas, enlace y permiso?</p></div><div class="card"><h3>👥 Teams</h3><p>¿Puedes explicar por qué la coautoría reduce archivos duplicados?</p></div><div class="card"><h3>🎨 Canva</h3><p>¿Puedes identificar jerarquía, contraste, coherencia y legibilidad?</p></div></div>
+      <div class="completeBox" id="boxRecursos"><span><b>Registra tu avance después de revisar los recursos y preguntas de comprobación.</b></span><button class="completeBtn" data-complete="recursos">✓ Recursos revisados</button></div>
+    </section>
+
+    <!-- JUEGOS -->
+    <section class="page" id="juegos">
+      <div class="pageHero"><div><div class="eyebrow">Gamificación</div><h1>Practica conceptos <span class="gradientTitle">jugando</span></h1><p>Completa los tres retos. La validación es inmediata y el progreso se guarda en tu navegador.</p><div class="quote">Objetivo: reconocer conceptos y asociarlos con su uso real.</div></div><div class="heroImage"><img src="assets/images/08_multidispositivo.webp" alt="Aprendizaje colaborativo multidispositivo"><span class="imageLabel">Gamificación · aprendizaje activo</span></div></div>
+      <div class="tabs"><button class="tab active" data-tab="crossPane">Crucigrama</button><button class="tab" data-tab="memoryPane">Memoria</button><button class="tab" data-tab="wordPane">Sopa de letras</button></div>
+      <div class="gamePane active card" id="crossPane"><h2>Crucigrama digital</h2><div class="crossWrap"><div class="crossGrid" id="crossGrid"></div><div class="clues"><h3>Pistas</h3><ol><li><b>Horizontal 1:</b> Servicio de nube utilizado en la sesión.</li><li><b>Horizontal 2:</b> Herramienta de diseño visual.</li><li><b>Vertical 1:</b> Plataforma de coordinación de Microsoft.</li><li><b>Vertical 2:</b> Vínculo que permite compartir un recurso.</li><li><b>Vertical 3:</b> Historial que permite recuperar estados anteriores.</li></ol><button class="primary" id="checkCross" type="button">Comprobar crucigrama</button><div id="crossMsg" class="gameMsg"></div></div></div></div>
+      <div class="gamePane card" id="memoryPane"><h2>Memoria: concepto y función</h2><p class="muted">Encuentra las parejas correctas.</p><div class="memoryGrid" id="memoryGrid"></div><div id="memoryMsg" class="gameMsg"></div></div>
+      <div class="gamePane card" id="wordPane"><h2>Sopa de letras: 10 palabras clave</h2><p class="muted">Selecciona letras contiguas en orden. Las palabras aparecen horizontal o verticalmente.</p><div class="wordBank" id="wordBank"></div><div class="wordGrid" id="wordGrid"></div><div id="wordMsg" class="gameMsg"></div></div>
+    </section>
+
+    <!-- EVALUACION -->
+    <section class="page" id="evaluacion">
+      <div class="pageHero"><div><div class="eyebrow">Evaluación formativa</div><h1>Demuestra que puedes <span class="gradientTitle">aplicar lo aprendido</span></h1><p>Responde las 10 preguntas. Obtendrás retroalimentación inmediata y podrás corregir antes de terminar.</p><div class="quote">No se evalúa solo memoria: también debes reconocer decisiones correctas de trabajo digital.</div></div><div class="heroImage"><img src="assets/images/09_feedback.webp" alt="Mentoría y retroalimentación"><span class="imageLabel">Evaluación · feedback · mejora continua</span></div></div>
+      <div class="sectionHead"><h2>Cuestionario</h2><p id="quizSummary">Respondidas: 0/10 · Correctas: 0/10</p></div>
+      <div id="quizWrap"></div>
+      <div class="sectionHead"><h2>Rúbrica de la actividad</h2><p>Instrumento de evaluación</p></div>
+      <div class="tableWrap"><table class="rubric"><thead><tr><th>Criterio</th><th>Logro destacado</th><th>Logro esperado</th><th>En proceso</th><th>Inicio</th></tr></thead><tbody>
+        <tr><td><b>Organización en OneDrive</b></td><td>Estructura clara, nombres consistentes y evidencias correctamente ubicadas.</td><td>Carpetas y archivos organizados con pocos ajustes necesarios.</td><td>Organización parcial o nombres poco claros.</td><td>Archivos dispersos o estructura ausente.</td></tr>
+        <tr><td><b>Permisos, enlaces y coautoría</b></td><td>Configura accesos adecuados, valida el enlace y demuestra control de versiones.</td><td>Comparte correctamente y aplica permisos pertinentes.</td><td>Presenta errores menores de acceso o coordinación.</td><td>No diferencia ver/editar o genera enlaces inadecuados.</td></tr>
+        <tr><td><b>Diseño visual en Canva</b></td><td>Aplica jerarquía, contraste, coherencia y legibilidad con intención profesional.</td><td>Aplica los principios principales de manera adecuada.</td><td>Aplica solo algunos principios o de forma irregular.</td><td>Diseño desorganizado o difícil de leer.</td></tr>
+        <tr><td><b>Fuentes y uso responsable de IA</b></td><td>Registra fuentes, declara IA y revisa críticamente los resultados.</td><td>Registra fuentes y reconoce el apoyo de IA.</td><td>Registro incompleto o revisión limitada.</td><td>No registra fuentes ni declara el uso de IA.</td></tr>
+      </tbody></table></div>
+    </section>
+
+    <!-- DIPLOMA -->
+    <section class="page" id="diploma">
+      <div class="pageHero"><div><div class="eyebrow">Cierre de la experiencia</div><h1>Convierte tu avance en un <span class="gradientTitle">logro visible</span></h1><p>El diploma se habilita cuando completes OneDrive, Teams, Canva, la actividad, los recursos, los tres juegos y el cuestionario.</p><div class="quote">Antes de descargarlo, verifica que tu nombre y correo sean correctos.</div></div><div class="heroImage"><img src="assets/images/10_logro.webp" alt="Estudiantes celebrando su logro"><span class="imageLabel">Logro · certificación · cierre</span></div></div>
+      <div class="statusGrid" id="statusGrid"></div>
+      <div class="diploma locked" id="diplomaCard">
+        <div class="diplomaInner">
+          <div class="diplomaTopline"></div>
+          <div class="diplomaLogos">
+            <div class="diplomaLogoBox"><img src="assets/images/logo_sise.webp" alt="SISE"></div>
+            <div class="diplomaSeal">★</div>
+            <div class="diplomaLogoBox"><img src="assets/images/logo_cpe.webp" alt="CPEX"></div>
+          </div>
+          <div class="diplomaEyebrow">CERTIFICADO DE LOGRO · CLASE VIRTUAL</div>
+          <h2>Colaboración digital para la empleabilidad</h2>
+          <p class="diplomaIntro">Se reconoce a</p>
+          <div class="diplomaName" id="dipName">Estudiante</div>
+          <p class="diplomaText">por completar satisfactoriamente la experiencia de aprendizaje sobre <b>OneDrive, Teams, Canva, coautoría, organización digital y empleabilidad</b>, demostrando participación activa y uso responsable de recursos digitales.</p>
+          <div class="diplomaMetaGrid"><div><span>Participante</span><b id="dipEmail">correo@ejemplo.com</b></div><div><span>Resultado</span><b id="dipScore">Cuestionario · 0/10</b></div><div><span>Finalización</span><b id="dipDate">Pendiente</b></div></div>
+          <p class="muted" id="dipMeta"></p>
+          <div class="diplomaFooter"><span>SISE · CPEX</span><span>Taller de Informática para la Empleabilidad · Sesión 5</span></div>
+          <button class="primary downloadBtn" id="downloadDiploma" type="button">⬇ Descargar diploma profesional en PDF</button>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<div class="lightbox" id="lightbox" aria-hidden="true"><div class="lightboxCard"><button class="lightboxClose" id="lightboxClose" aria-label="Cerrar">×</button><img id="lightboxImg" src="" alt="Vista ampliada"></div></div>
+<div class="toast" id="toast"></div><div class="confetti" id="confetti"></div>
+
+<script>
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+const ACCESS_HASH="7ac147d99dabb1e993dd7afb7f11775f35d3dc1711569316b56e1a5e99946dc5";
+const welcomeImages=["01_inicio.webp","02_onedrive.webp","03_teams.webp","04_canva.webp","07_empleabilidad.webp"].map(x=>"assets/images/"+x);
+const crumb={inicio:"Inicio · Ruta general de la sesión",onedrive:"Módulo 1 · OneDrive",teams:"Módulo 2 · Teams y coautoría",canva:"Módulo 3 · Canva y diseño visual",actividad:"Práctica guiada · Evidencia colaborativa",recursos:"Recursos · Videos y comprobación",juegos:"Gamificación · 3 retos",evaluacion:"Evaluación · Cuestionario y rúbrica",diploma:"Cierre · Diploma"};
+const blankProgress=()=>({onedrive:false,teams:false,canva:false,actividad:false,recursos:false,cross:false,memory:false,word:false,quiz:false,quizAnswered:{},quizScore:0});
+let user=null, progress=blankProgress(), zoom=1;
+
+function sha256Fallback(ascii){function rightRotate(v,a){return(v>>>a)|(v<<(32-a))}let mathPow=Math.pow,maxWord=mathPow(2,32),lengthProperty="length",i,j,result="",words=[],asciiBitLength=ascii[lengthProperty]*8,hash=sha256Fallback.h=sha256Fallback.h||[],k=sha256Fallback.k=sha256Fallback.k||[],primeCounter=k[lengthProperty],isComposite={};for(let candidate=2;primeCounter<64;candidate++){if(!isComposite[candidate]){for(i=0;i<313;i+=candidate)isComposite[i]=candidate;hash[primeCounter]=(mathPow(candidate,.5)*maxWord)|0;k[primeCounter++]=(mathPow(candidate,1/3)*maxWord)|0}}ascii+="\x80";while(ascii[lengthProperty]%64-56)ascii+="\x00";for(i=0;i<ascii[lengthProperty];i++){j=ascii.charCodeAt(i);if(j>>8)return"";words[i>>2]|=j<<((3-i)%4)*8}words[words[lengthProperty]]=((asciiBitLength/maxWord)|0);words[words[lengthProperty]]=asciiBitLength;for(j=0;j<words[lengthProperty];){let w=words.slice(j,j+=16),oldHash=hash.slice(0);hash=hash.slice(0,8);for(i=0;i<64;i++){let i2=i+j,w15=w[i-15],w2=w[i-2],a=hash[0],e=hash[4],temp1=hash[7]+(rightRotate(e,6)^rightRotate(e,11)^rightRotate(e,25))+((e&hash[5])^((~e)&hash[6]))+k[i]+(w[i]=(i<16)?w[i]:(w[i-16]+(rightRotate(w15,7)^rightRotate(w15,18)^(w15>>>3))+w[i-7]+(rightRotate(w2,17)^rightRotate(w2,19)^(w2>>>10)))|0),temp2=(rightRotate(a,2)^rightRotate(a,13)^rightRotate(a,22))+((a&hash[1])^(a&hash[2])^(hash[1]&hash[2]));hash=[(temp1+temp2)|0].concat(hash);hash[4]=(hash[4]+temp1)|0}for(i=0;i<8;i++)hash[i]=(hash[i]+oldHash[i])|0}for(i=0;i<8;i++)for(j=3;j+1;j--){let b=(hash[i]>>(j*8))&255;result+=(b<16?0:"")+b.toString(16)}return result}
+async function sha256(s){try{if(window.crypto&&crypto.subtle){let b=new TextEncoder().encode(s),h=await crypto.subtle.digest("SHA-256",b);return [...new Uint8Array(h)].map(x=>x.toString(16).padStart(2,"0")).join("")}}catch(e){}return sha256Fallback(s)}
+function keyFor(email){return"sise_collab_progress_"+btoa(unescape(encodeURIComponent(email.toLowerCase()))).replace(/=/g,"")}
+function loadProgress(){try{progress=Object.assign(blankProgress(),JSON.parse(localStorage.getItem(keyFor(user.email)))||{})}catch(e){progress=blankProgress()}}
+function saveProgress(){if(user)localStorage.setItem(keyFor(user.email),JSON.stringify(progress))}
+function toast(t){let e=$("#toast");e.textContent=t;e.classList.add("show");setTimeout(()=>e.classList.remove("show"),2400)}
+function celebrate(){let c=$("#confetti");c.innerHTML="";let colors=["#0078d4","#28a8ea","#00c4cc","#7d2ae8","#ff0f57"];for(let i=0;i<75;i++){let x=document.createElement("i");x.style.left=Math.random()*100+"vw";x.style.background=colors[i%colors.length];x.style.animationDelay=Math.random()*.5+"s";c.appendChild(x)}setTimeout(()=>c.innerHTML="",2200)}
+
+/* welcome slideshow */
+let welcomeIndex=0;const dots=$("#welcomeDots");welcomeImages.forEach((_,i)=>{let d=document.createElement("i");if(!i)d.className="active";dots.appendChild(d)});function rotateWelcome(){let v=$("#welcomeVisual");v.style.backgroundImage=`url('${welcomeImages[welcomeIndex]}')`;$$('#welcomeDots i').forEach((d,i)=>d.classList.toggle('active',i===welcomeIndex));welcomeIndex=(welcomeIndex+1)%welcomeImages.length}rotateWelcome();setInterval(rotateWelcome,4000);
+
+/* login */
+$("#loginForm").addEventListener("submit",async e=>{e.preventDefault();let name=$("#name").value.trim(),email=$("#email").value.trim(),pass=$("#access").value,msg=$("#loginMsg");msg.className="formMsg";if(!name||!email||!pass){msg.classList.add("bad");msg.textContent="Completa todos los campos.";return}if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){msg.classList.add("bad");msg.textContent="Ingresa un correo válido.";return}let h=await sha256(pass);if(h!==ACCESS_HASH){msg.classList.add("bad");msg.textContent="Clave incorrecta. Verifica mayúsculas y minúsculas.";return}user={name,email};sessionStorage.setItem("sise_collab_user",JSON.stringify(user));loadProgress();enterApp()});
+function enterApp(){if(!user)return;$("#welcome").classList.add("hidden");$("#app").classList.remove("hidden");$("#userName").textContent=user.name;$("#avatar").textContent=(user.name.trim()[0]||"E").toUpperCase();$("#dipName").textContent=user.name;restoreUI();updateProgress();updateRightContent("inicio");}
+try{user=JSON.parse(sessionStorage.getItem("sise_collab_user"));if(user){loadProgress();enterApp()}}catch(e){}
+$("#logout").onclick=()=>{sessionStorage.removeItem("sise_collab_user");user=null;$("#app").classList.add("hidden");$("#welcome").classList.remove("hidden");$("#access").value="";toast("Sesión cerrada. Tu progreso permanece guardado.")};
+
+/* navigation */
+
+const pageTips={
+ inicio:["Sigue la ruta de izquierda a derecha: nube, colaboración, diseño y evidencia.","Usa nombres claros para carpetas y archivos desde el inicio.","Piensa en la actividad como una evidencia de empleabilidad, no solo como una tarea."],
+ onedrive:["Crea una carpeta raíz y subcarpetas por evidencia antes de compartir.","Define permisos mínimos necesarios: ver o editar según el rol.","Evita archivos duplicados: trabaja sobre una fuente común."],
+ teams:["Centraliza acuerdos y archivos en el mismo espacio de colaboración.","Usa comentarios breves y accionables cuando revises el trabajo de tu equipo.","El historial de versiones te permite recuperar cambios sin perder trazabilidad."],
+ canva:["Jerarquía visual: el título debe destacar antes que el detalle.","Mantén una paleta coherente y suficiente contraste entre texto y fondo.","La IA puede apoyar ideas, pero revisa, adapta y declara su aporte."],
+ actividad:["Antes de diseñar, acuerden estructura, responsables y nombres de archivo.","El storyboard debe mostrar una secuencia clara: competencias, logros, experiencias y cierre.","Registra las fuentes utilizadas y verifica que los enlaces funcionen."],
+ recursos:["Pausa los videos y replica el procedimiento en tu propio espacio de trabajo.","Compara el procedimiento del video con la práctica solicitada.","Anota un atajo o técnica que puedas aplicar en otra actividad académica o laboral."],
+ juegos:["Relaciona cada concepto con su función, no solo memorices palabras.","Si fallas, usa el feedback para volver al contenido correspondiente.","Completar los juegos refuerza vocabulario clave antes del cuestionario."],
+ evaluacion:["Lee todas las alternativas antes de responder.","Revisa tus errores y vuelve al módulo correspondiente si es necesario.","La rúbrica te muestra qué significa una evidencia profesional, clara y responsable."],
+ diploma:["Verifica tu nombre y correo antes de descargar el diploma.","El diploma se habilita solo cuando toda la ruta está completada.","Guarda tu diploma como evidencia de participación en la experiencia virtual."]
+};
+const pagePhrases={
+ inicio:["Tu organización digital también comunica cómo trabajas.","Colaborar mejor empieza por ordenar mejor.","Cada herramienta aporta valor cuando existe un propósito claro."],
+ onedrive:["Una nube ordenada convierte archivos dispersos en trabajo profesional.","Compartir con criterio es parte de la seguridad digital.","La claridad en los archivos ahorra tiempo al equipo."],
+ teams:["Colaborar no es trabajar al mismo tiempo: es avanzar hacia el mismo objetivo.","La comunicación deja de ser ruido cuando los acuerdos quedan visibles.","Una sola versión, varios aportes, un mismo propósito."],
+ canva:["Diseñar es decidir qué debe mirar primero tu audiencia.","La creatividad profesional combina claridad, coherencia y propósito.","Una buena presentación hace visible el valor de tus ideas."],
+ actividad:["Planificar primero te permite crear mejor.","Una evidencia profesional cuenta una historia clara sobre lo que sabes hacer.","El trabajo en equipo mejora cuando cada aporte tiene un lugar definido."],
+ recursos:["Aprender haciendo convierte información en competencia.","Un tutorial tiene valor cuando puedes aplicar lo aprendido.","Practicar transforma una herramienta digital en una habilidad."],
+ juegos:["Aprender también puede ser retador, breve y divertido.","Cada reto completado fortalece tu dominio del tema.","Equivocarte, revisar y volver a intentar también es aprendizaje."],
+ evaluacion:["Evaluar no es solo medir: es reconocer qué puedes mejorar.","Responder con criterio demuestra comprensión, no memorización.","La calidad de tu evidencia habla de tu proceso de aprendizaje."],
+ diploma:["Completar la ruta es el resultado; aplicar lo aprendido es el verdadero logro.","Tu diploma marca un cierre, pero la competencia continúa creciendo.","Cada habilidad digital que dominas amplía tus posibilidades profesionales."]
+};
+let currentPage="inicio",tipIndex=0,phraseIndex=0;
+function updateRightContent(id){currentPage=id;tipIndex=0;phraseIndex=0;renderRightTip();renderRightPhrase();}
+function renderRightTip(){let a=pageTips[currentPage]||pageTips.inicio;$("#rightTip").textContent=a[tipIndex%a.length];}
+function renderRightPhrase(){let a=pagePhrases[currentPage]||pagePhrases.inicio;$("#rightPhrase").textContent='“'+a[phraseIndex%a.length]+'”';}
+$("#nextTip").onclick=()=>{tipIndex++;renderRightTip()};
+$("#nextPhrase").onclick=()=>{phraseIndex++;renderRightPhrase()};
+$("#toolsToggle").onclick=()=>$("#rightbar").classList.toggle("open");
+document.addEventListener("click",e=>{if(window.innerWidth<=1180 && $("#rightbar").classList.contains("open") && !$("#rightbar").contains(e.target) && !$("#toolsToggle").contains(e.target)) $("#rightbar").classList.remove("open")});
+
+function showPage(id){updateRightContent(id);$("#rightbar").classList.remove("open");$$('.page').forEach(p=>p.classList.toggle('active',p.id===id));$$('.navBtn').forEach(b=>b.classList.toggle('active',b.dataset.page===id));$("#crumb").textContent=crumb[id]||"";$("#sidebar").classList.remove("open");window.scrollTo({top:0,behavior:"smooth"})}
+$$('.navBtn').forEach(b=>b.onclick=()=>showPage(b.dataset.page));$("#hamb").onclick=()=>$("#sidebar").classList.toggle("open");
+
+/* zoom */
+function applyZoom(){zoom=Math.min(1.3,Math.max(.8,zoom));document.documentElement.style.setProperty('--zoom',zoom);$("#mainContent").style.zoom=zoom;$("#zoomValue").textContent=Math.round(zoom*100)+"%";localStorage.setItem("sise_collab_zoom",zoom)}
+zoom=parseFloat(localStorage.getItem("sise_collab_zoom"))||1;applyZoom();$("#zoomIn").onclick=()=>{zoom+=.1;applyZoom()};$("#zoomOut").onclick=()=>{zoom-=.1;applyZoom()};$("#zoomReset").onclick=()=>{zoom=1;applyZoom()};$("#fullScreen").onclick=async()=>{try{if(!document.fullscreenElement)await document.documentElement.requestFullscreen();else await document.exitFullscreen()}catch(e){toast("Pantalla completa no disponible en este navegador.")}};
+
+/* section completion */
+$$('[data-complete]').forEach(btn=>btn.onclick=()=>{let k=btn.dataset.complete;progress[k]=true;saveProgress();restoreUI();updateProgress();toast("Módulo completado");celebrate()});
+function restoreUI(){["onedrive","teams","canva","actividad","recursos"].forEach(k=>{let box=$("#box"+k[0].toUpperCase()+k.slice(1)),btn=document.querySelector(`[data-complete="${k}"]`);if(progress[k]){if(box)box.classList.add("done");if(btn)btn.textContent="✓ Completado"}});restoreQuiz();updateDiploma()}
+function updateProgress(){let vals=[progress.onedrive,progress.teams,progress.canva,progress.actividad,progress.recursos,progress.cross,progress.memory,progress.word,progress.quiz],pct=Math.round(vals.filter(Boolean).length/vals.length*100);$("#progressPct").textContent=pct+"%";$("#progressBar").style.width=pct+"%";$("#rightProgress").textContent=pct+"%";$("#rightProgressBar").style.width=pct+"%";updateDiploma()}
+
+/* image lightbox */
+$$('.heroImage img').forEach(img=>img.onclick=()=>{$("#lightboxImg").src=img.src;$("#lightbox").classList.add("open");$("#lightbox").setAttribute("aria-hidden","false")});function closeLightbox(){$("#lightbox").classList.remove("open");$("#lightbox").setAttribute("aria-hidden","true")}$("#lightboxClose").onclick=closeLightbox;$("#lightbox").onclick=e=>{if(e.target===$("#lightbox"))closeLightbox()};document.addEventListener("keydown",e=>{if(e.key==="Escape")closeLightbox()});
+
+/* game tabs */
+$$('.tab').forEach(t=>t.onclick=()=>{$$('.tab').forEach(x=>x.classList.remove('active'));$$('.gamePane').forEach(x=>x.classList.remove('active'));t.classList.add('active');$('#'+t.dataset.tab).classList.add('active')});
+
+/* crossword */
+const crossWords=[{w:"ONEDRIVE",r:2,c:0,d:"h"},{w:"CANVA",r:3,c:1,d:"h"},{w:"TEAMS",r:1,c:2,d:"v"},{w:"ENLACE",r:2,c:7,d:"v"},{w:"VERSION",r:2,c:6,d:"v"}],crossCells={};crossWords.forEach(o=>[...o.w].forEach((ch,k)=>{let r=o.r+(o.d==='v'?k:0),c=o.c+(o.d==='h'?k:0),key=r+'-'+c;if(crossCells[key]&&crossCells[key]!==ch)console.warn('Cross conflict',key);crossCells[key]=ch}));for(let r=0;r<9;r++)for(let c=0;c<9;c++){let key=r+'-'+c;if(crossCells[key]){let i=document.createElement('input');i.maxLength=1;i.className='cell';i.dataset.key=key;i.oninput=()=>i.value=i.value.toUpperCase().replace(/[^A-Z]/g,'');$('#crossGrid').appendChild(i)}else{let b=document.createElement('div');b.className='block';$('#crossGrid').appendChild(b)}}$('#checkCross').onclick=()=>{let ok=true;$$('.cell').forEach(i=>{let yes=i.value.toUpperCase()===crossCells[i.dataset.key];i.style.background=yes?'#d8f4e5':'#ffe6eb';if(!yes)ok=false});let m=$('#crossMsg');if(ok){progress.cross=true;saveProgress();m.className='gameMsg good';m.textContent='¡Crucigrama completado!';updateProgress();celebrate()}else{m.className='gameMsg bad';m.textContent='Aún hay casillas por corregir.'}};
+
+/* memory */
+const pairs=[["OneDrive","Nube"],["Teams","Coordinación"],["Canva","Diseño"],["Permisos","Acceso"],["Versiones","Historial"],["Storyboard","Secuencia"]];let cards=pairs.flatMap((p,i)=>p.map(text=>({pair:i,text}))).sort(()=>Math.random()-.5),flipped=[],matched=0;function drawMemory(){let g=$('#memoryGrid');g.innerHTML='';cards.forEach((o,i)=>{let b=document.createElement('button');b.className='memoryCard';b.textContent='?';b.onclick=()=>flipMemory(b,o,i);g.appendChild(b)})}function flipMemory(btn,o,i){if(btn.classList.contains('matched')||btn.classList.contains('flipped')||flipped.length===2)return;btn.classList.add('flipped');btn.textContent=o.text;flipped.push({btn,o,i});if(flipped.length===2)setTimeout(()=>{let[a,b]=flipped;if(a.o.pair===b.o.pair&&a.i!==b.i){a.btn.className='memoryCard matched';b.btn.className='memoryCard matched';matched+=2;if(matched===cards.length){progress.memory=true;saveProgress();$('#memoryMsg').className='gameMsg good';$('#memoryMsg').textContent='¡Todas las parejas encontradas!';updateProgress();celebrate()}}else{a.btn.classList.remove('flipped');b.btn.classList.remove('flipped');a.btn.textContent=b.btn.textContent='?'}flipped=[]},650)}drawMemory();
+
+/* word search 10 exact words */
+const words=["ONEDRIVE","TEAMS","CANVA","PERMISOS","ENLACES","COAUTORIA","VERSIONES","JERARQUIA","CONTRASTE","LEGIBILIDAD"],N=16,grid=Array.from({length:N},()=>Array(N).fill('')),placements=[
+ {w:0,r:0,c:0,dr:0,dc:1},{w:1,r:2,c:0,dr:0,dc:1},{w:2,r:4,c:0,dr:0,dc:1},{w:3,r:6,c:0,dr:0,dc:1},{w:4,r:8,c:0,dr:0,dc:1},{w:5,r:10,c:0,dr:0,dc:1},{w:6,r:12,c:0,dr:0,dc:1},{w:7,r:14,c:0,dr:0,dc:1},{w:8,r:0,c:14,dr:1,dc:0},{w:9,r:0,c:12,dr:1,dc:0}
+];placements.forEach(p=>[...words[p.w]].forEach((ch,k)=>grid[p.r+p.dr*k][p.c+p.dc*k]=ch));const alpha='ABCDEFGHIJKLMNOPQRSTUVWXYZ';for(let r=0;r<N;r++)for(let c=0;c<N;c++)if(!grid[r][c])grid[r][c]=alpha[(r*7+c*11+5)%26];$('#wordBank').innerHTML=words.map(w=>`<span class="word" data-word="${w}">${w}</span>`).join('');let seq=[],found=new Set();function resetSeq(){seq.forEach(x=>x.el.classList.remove('sel'));seq=[]}for(let r=0;r<N;r++)for(let c=0;c<N;c++){let b=document.createElement('button');b.className='letter';b.textContent=grid[r][c];b.onclick=()=>pickLetter(b,r,c);$('#wordGrid').appendChild(b)}function pickLetter(el,r,c){if(found.size===10)return;if(seq.length){let last=seq[seq.length-1],dr=r-last.r,dc=c-last.c;if(seq.length===1){if(Math.abs(dr)+Math.abs(dc)!==1){resetSeq();return}}else{let first=seq[0],dirR=seq[1].r-first.r,dirC=seq[1].c-first.c;if(dr!==dirR||dc!==dirC){resetSeq();return}}}el.classList.add('sel');seq.push({el,r,c,ch:el.textContent});let s=seq.map(x=>x.ch).join(''),rev=[...s].reverse().join(''),target=words.find(w=>!found.has(w)&&(w===s||w===rev));if(target){found.add(target);seq.forEach(x=>{x.el.classList.remove('sel');x.el.classList.add('found')});seq=[];document.querySelector(`[data-word="${target}"]`).classList.add('done');$('#wordMsg').className='gameMsg good';$('#wordMsg').textContent=`Encontraste ${target}. ${found.size}/10`;if(found.size===10){progress.word=true;saveProgress();updateProgress();celebrate()};return}let prefix=words.some(w=>!found.has(w)&&(w.startsWith(s)||w.startsWith(rev)));if(!prefix)resetSeq()}
+
+/* quiz */
+const quiz=[
+ ["¿Qué práctica evita duplicar archivos durante el trabajo en equipo?",["Enviar una copia a cada integrante","Coeditar un mismo archivo en la nube","Guardar todo en el escritorio"],1,"La coautoría mantiene una fuente común."],
+ ["Antes de compartir un archivo, ¿qué debes definir?",["El color del archivo","Quién puede ver o editar","La marca de la computadora"],1,"Los permisos deben corresponder al rol de cada participante."],
+ ["¿Para qué sirve el historial de versiones?",["Recuperar o revisar estados anteriores","Cambiar la contraseña de correo","Diseñar una portada"],0,"El historial permite revisar cambios y recuperar versiones."],
+ ["¿Qué herramienta se usa para elaborar el storyboard?",["Canva","Calculadora","Bloc de notas"],0,"Canva se utiliza para construir el boceto visual."],
+ ["¿Qué principio visual indica qué información debe destacar primero?",["Jerarquía","Duplicación","Sincronización"],0,"La jerarquía visual establece prioridades."],
+ ["¿Qué principio mejora la diferencia entre texto y fondo?",["Contraste","Coautoría","Historial"],0,"El contraste facilita la lectura y diferenciación."],
+ ["¿Qué aporta Teams al trabajo colaborativo?",["Centraliza coordinación y recursos","Elimina la necesidad de organizar archivos","Convierte automáticamente todo en PDF"],0,"Teams ayuda a coordinar comunicación y recursos del equipo."],
+ ["¿Cuál es un uso responsable de IA en Canva?",["Aceptar todo sin revisar","Usarla como apoyo, revisar y declarar su aporte","Ocultar siempre su uso"],1,"La IA debe apoyar el proceso y ser revisada por el estudiante."],
+ ["¿Qué debe mostrar la presentación profesional?",["Solo una portada","Competencias, logros y experiencias","Únicamente enlaces"],1,"La actividad solicita competencias, logros y experiencias profesionales."],
+ ["¿Qué debe registrarse cuando se usan recursos externos o IA?",["Fuentes y aportes de IA","Solo el navegador utilizado","La clave de acceso"],0,"La sesión requiere registrar fuentes y el uso de recursos generados con IA."]
+];$('#quizWrap').innerHTML=quiz.map((q,i)=>`<div class="quizQ" data-q="${i}"><h3>${i+1}. ${q[0]}</h3><div class="answers">${q[1].map((a,j)=>`<button class="answer" data-a="${j}" type="button">${a}</button>`).join('')}</div><div class="feedback"></div></div>`).join('');$$('.quizQ').forEach(box=>{let i=+box.dataset.q;box.querySelectorAll('.answer').forEach(btn=>btn.onclick=()=>{box.querySelectorAll('.answer').forEach(x=>x.classList.remove('correct','wrong'));let j=+btn.dataset.a,ok=j===quiz[i][2];btn.classList.add(ok?'correct':'wrong');box.querySelector('.feedback').textContent=(ok?'✓ Correcto. ':'✗ Revisa. ')+quiz[i][3];progress.quizAnswered[i]=j;progress.quizScore=Object.entries(progress.quizAnswered).reduce((s,[k,v])=>s+(+v===quiz[+k][2]?1:0),0);if(Object.keys(progress.quizAnswered).length===10){progress.quiz=true;celebrate()}saveProgress();restoreQuiz();updateProgress()})});function restoreQuiz(){let n=Object.keys(progress.quizAnswered||{}).length;$('#quizSummary').textContent=`Respondidas: ${n}/10 · Correctas: ${progress.quizScore||0}/10`;Object.entries(progress.quizAnswered||{}).forEach(([i,a])=>{let box=document.querySelector(`.quizQ[data-q="${i}"]`);if(!box)return;let btn=box.querySelector(`.answer[data-a="${a}"]`);if(btn){let ok=+a===quiz[+i][2];btn.classList.add(ok?'correct':'wrong');box.querySelector('.feedback').textContent=(ok?'✓ Correcto. ':'✗ Revisa. ')+quiz[+i][3]}})}
+
+/* diploma */
+function updateDiploma(){let checks=[["OneDrive",progress.onedrive],["Teams y coautoría",progress.teams],["Canva",progress.canva],["Actividad",progress.actividad],["Recursos",progress.recursos],["Crucigrama",progress.cross],["Memoria",progress.memory],["Sopa de letras",progress.word],["Cuestionario",progress.quiz]];$('#statusGrid').innerHTML=checks.map(x=>`<div class="status ${x[1]?'ok':''}">${x[1]?'✓':'○'} ${x[0]}</div>`).join('');let unlocked=checks.every(x=>x[1]);$('#diplomaCard').classList.toggle('locked',!unlocked);if(user){let when=unlocked?new Date().toLocaleString('es-PE'):'Pendiente';$('#dipName').textContent=user.name;$('#dipEmail').textContent=user.email;$('#dipScore').textContent='Cuestionario · '+progress.quizScore+'/10';$('#dipDate').textContent=when;$('#dipMeta').textContent=unlocked?'Todos los requisitos de la sesión han sido completados.':'Completa todos los requisitos para habilitar el diploma.'}}
+
+function dataURLToBytes(url){let bin=atob(url.split(',')[1]),a=new Uint8Array(bin.length);for(let i=0;i<bin.length;i++)a[i]=bin.charCodeAt(i);return a}function makeImagePdf(jpeg,w,h){const head='%PDF-1.4\n',parts=[],offsets=[0];let len=head.length;function push(s){offsets.push(len);parts.push(s);len+=s.length}push('1 0 obj<< /Type /Catalog /Pages 2 0 R >>endobj\n');push('2 0 obj<< /Type /Pages /Kids [3 0 R] /Count 1 >>endobj\n');push('3 0 obj<< /Type /Page /Parent 2 0 R /MediaBox [0 0 842 595] /Resources << /XObject << /Im0 4 0 R >> >> /Contents 5 0 R >>endobj\n');let ih=`4 0 obj<< /Type /XObject /Subtype /Image /Width ${w} /Height ${h} /ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter /DCTDecode /Length ${jpeg.length} >>stream\n`;offsets.push(len);parts.push(ih);len+=ih.length;parts.push(jpeg);len+=jpeg.length;let it='\nendstream\nendobj\n';parts.push(it);len+=it.length;let stream='q\n842 0 0 595 0 0 cm\n/Im0 Do\nQ\n';push(`5 0 obj<< /Length ${stream.length} >>stream\n${stream}endstream\nendobj\n`);let xref=len,x='xref\n0 6\n0000000000 65535 f \n';for(let i=1;i<=5;i++)x+=String(offsets[i]).padStart(10,'0')+' 00000 n \n';x+=`trailer<< /Size 6 /Root 1 0 R >>\nstartxref\n${xref}\n%%EOF`;parts.push(x);return new Blob([head,...parts],{type:'application/pdf'})}
+function loadCanvasImage(src){return new Promise((resolve,reject)=>{let im=new Image();im.onload=()=>resolve(im);im.onerror=reject;im.src=src})}
+function drawContain(ctx,img,x,y,w,h){let s=Math.min(w/img.width,h/img.height),dw=img.width*s,dh=img.height*s;ctx.drawImage(img,x+(w-dw)/2,y+(h-dh)/2,dw,dh)}
+$('#downloadDiploma').onclick=async()=>{let needed=[progress.onedrive,progress.teams,progress.canva,progress.actividad,progress.recursos,progress.cross,progress.memory,progress.word,progress.quiz];if(!needed.every(Boolean)){toast('Completa todos los requisitos para descargar el diploma.');return}try{let [logoSise,logoCpe]=await Promise.all([loadCanvasImage('assets/images/logo_sise.webp'),loadCanvasImage('assets/images/logo_cpe.webp')]);let c=document.createElement('canvas');c.width=1600;c.height=1130;let x=c.getContext('2d'),g=x.createLinearGradient(0,0,1600,1130);g.addColorStop(0,'#eef9ff');g.addColorStop(.46,'#ffffff');g.addColorStop(1,'#f8f1ff');x.fillStyle=g;x.fillRect(0,0,c.width,c.height);x.strokeStyle='#0b639f';x.lineWidth=16;x.strokeRect(28,28,c.width-56,c.height-56);x.strokeStyle='#00c4cc';x.lineWidth=5;x.strokeRect(54,54,c.width-108,c.height-108);let hg=x.createLinearGradient(160,0,1440,0);hg.addColorStop(0,'#0078d4');hg.addColorStop(.5,'#00c4cc');hg.addColorStop(1,'#7d2ae8');x.fillStyle=hg;x.fillRect(120,98,1360,12);drawContain(x,logoSise,145,125,250,115);drawContain(x,logoCpe,1205,125,250,115);x.beginPath();x.arc(800,180,55,0,Math.PI*2);x.fillStyle='#edf5ff';x.fill();x.beginPath();x.arc(800,180,45,0,Math.PI*2);x.fillStyle='#5d45d8';x.fill();x.fillStyle='#fff';x.font='700 42px Arial';x.textAlign='center';x.fillText('★',800,195);x.fillStyle='#2b668f';x.font='900 22px Arial';x.fillText('CERTIFICADO DE LOGRO · CLASE VIRTUAL',800,285);x.fillStyle='#143550';x.font='800 52px Arial';x.fillText('Colaboración digital para la empleabilidad',800,355);x.fillStyle='#6b7f91';x.font='27px Arial';x.fillText('Se reconoce a',800,430);x.fillStyle='#087ac0';x.font='700 62px Georgia';x.fillText(user.name,800,525);x.fillStyle='#425970';x.font='25px Arial';x.fillText('por completar satisfactoriamente la experiencia virtual sobre',800,600);x.font='700 25px Arial';x.fillText('OneDrive, Teams, Canva, coautoría y empleabilidad digital.',800,642);x.fillStyle='#607487';x.font='22px Arial';x.fillText(user.email,800,710);x.fillText('Finalización: '+new Date().toLocaleString('es-PE'),800,755);x.fillText('Cuestionario: '+progress.quizScore+'/10',800,800);x.fillStyle='#6b38cf';x.font='700 24px Arial';x.fillText('Taller de Informática para la Empleabilidad · Sesión 5',800,900);x.fillStyle='#66788c';x.font='20px Arial';x.fillText('SISE · CPEX · Experiencia de aprendizaje digital',800,950);x.strokeStyle='#d7e5ef';x.lineWidth=2;x.beginPath();x.moveTo(330,1015);x.lineTo(1270,1015);x.stroke();x.fillStyle='#718697';x.font='17px Arial';x.fillText('Evidencia digital generada al completar todos los requisitos de la sesión',800,1050);let bytes=dataURLToBytes(c.toDataURL('image/jpeg',.95)),pdf=makeImagePdf(bytes,c.width,c.height),a=document.createElement('a');a.href=URL.createObjectURL(pdf);a.download='Diploma_SISE_CPEX_'+user.name.replace(/\s+/g,'_')+'.pdf';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1200);celebrate();toast('Diploma profesional PDF generado')}catch(e){toast('No se pudo generar el diploma. Vuelve a intentarlo.')}};
+
+updateProgress();
+</script>
+</body>
+</html>
